@@ -5,11 +5,11 @@ import SideBar from "../components/sidebar";
 
 function Home(){
     return(
-        <BrowserRouter>
+      
         <div>
         <SideBar/>
         </div>
-        </BrowserRouter>
+  
       
     );
 }
