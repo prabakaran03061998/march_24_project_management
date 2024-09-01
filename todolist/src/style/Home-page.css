@@ -1,0 +1,17 @@
+.home-container {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+}
+
+.sidebar {
+    width: 250px; /* Adjust the width as needed */
+    background-color: #f8f9fa; /* Optional: Background color for sidebar */
+    padding: 10px; /* Optional: Padding inside the sidebar */
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* Optional: Shadow for the sidebar */
+}
+
+.table-container {
+    flex: 1; /* This makes the table container take up the remaining space */
+    padding: 20px; /* Optional: Add padding around the table */
+    overflow-y: auto; /* Optional: Scroll if content overflows */
+}

@@ -1,15 +1,20 @@
 import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import SideBar from "../components/sidebar";
+import BasicTable from "./Status-page";
+import "../style/Home-page.css";
 
 function Home(){
     return(
-      
-        <div>
-        <SideBar/>
+    <div className="home-container">
+        
+        <SideBar className="sidebar"/>
+
+        {/* ********* ** Ststus Table ** ********** */}
+        <div className="table-container">
+            <BasicTable />
         </div>
-  
+
+    </div>
       
     );
 }

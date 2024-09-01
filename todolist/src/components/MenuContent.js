@@ -15,11 +15,11 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded';
 
 const mainListItems = [
-  { text: 'Home', icon: <HomeRoundedIcon /> },
-  { text: 'DashBoard', icon: <AnalyticsRoundedIcon /> },
-  { text: 'ToDo', icon: <AssignmentRoundedIcon /> },
-  { text: 'Status', icon: <AssessmentRoundedIcon /> },
-  { text: 'User', icon: <AccountCircleIcon /> },
+  { text: 'Home', icon: <HomeRoundedIcon />, path: '/' },
+  { text: 'Dashboard', icon: <AnalyticsRoundedIcon />, path: '/dashboard' },
+  { text: 'ToDo', icon: <AssignmentRoundedIcon />, path: '/todo' },
+  { text: 'Status', icon: <AssessmentRoundedIcon />, path: '/status' },
+  { text: 'User', icon: <AccountCircleIcon />, path: '/user' },
 ];
 
 const secondaryListItems = [
