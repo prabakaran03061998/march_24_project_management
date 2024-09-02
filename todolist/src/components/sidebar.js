@@ -6,10 +6,8 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import SelectContent from './SelectContent';
 import MenuContent from './MenuContent';
-import CardAlert from './CardAlert';
-import OptionsMenu from './OptionsMenu';
+
 
 const drawerWidth = 240;
 
@@ -38,15 +36,27 @@ export default function SideMenu() {
       <Box
         sx={{
           display: 'flex',
-          mt: '60px',
+          flexDirection: 'column',
+          alignItems: 'center',
+          mt: 2, // Adjust top margin as needed
           p: 1.5,
         }}
       >
-        <SelectContent />
+        <Avatar
+          alt="Login360"
+          sx={{ width: 56, height: 56 }} // Adjust size if needed
+        />
+        {/* ******************** profile Name************************ */}
+        <Box sx={{ textAlign: 'center', mt: 1 }}>
+          <Typography variant="body2" sx={{ fontWeight: 450, lineHeight: '16px' }}>
+            Name
+          </Typography>
+        </Box>
+        
       </Box>
       <Divider />
       <MenuContent />
-      <CardAlert />
+
       <Stack
         direction="row"
         sx={{
@@ -56,23 +66,7 @@ export default function SideMenu() {
           borderTop: '1px solid',
           borderColor: 'divider',
         }}
-      >
-        <Avatar
-          sizes="small"
-          alt="Login360"
-          // src="/static/images/avatar/7.jpg"
-          sx={{ width: 36, height: 36 }}
-        />
-        <Box sx={{ mr: 'auto' }}>
-          <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
-            Login 360
-          </Typography>
-          <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            Login360@email.com
-          </Typography>
-        </Box>
-        <OptionsMenu />
-      </Stack>
+      />
     </Drawer>
   );
 }
