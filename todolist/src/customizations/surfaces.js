@@ -1,8 +1,8 @@
 import { alpha } from '@mui/material/styles';
-import { gray } from '../themePrimitives';
+import { gray } from '../theme/themePrimitives';
 
 /* eslint-disable import/prefer-default-export */
-export const surfacesCustomizations = {
+ const surfacesCustomizations = {
   MuiAccordion: {
     defaultProps: {
       elevation: 0,
@@ -111,3 +111,4 @@ export const surfacesCustomizations = {
     },
   },
 };
+export default surfacesCustomizations;
