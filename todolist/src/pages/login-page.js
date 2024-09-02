@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Paper, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -16,3 +17,5 @@ const LoginPage = () => {
 }
 
 export default LoginPage;
+=======
+>>>>>>> 05e919fb6cee3bd909834e4b5c26bf7b1e945f41
