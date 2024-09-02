@@ -17,6 +17,7 @@ import getSignUpTheme from '../theme/getSignUpTheme';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from '../theme/CustomIcons';
 import TemplateFrame from '../theme/TemplateFrame';
 
+
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
