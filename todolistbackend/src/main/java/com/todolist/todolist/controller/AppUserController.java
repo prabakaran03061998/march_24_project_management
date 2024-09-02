@@ -1,18 +1,18 @@
-package com.todolist.todolist.user;
+package com.todolist.todolist.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todolist.todolist.dto.UserSignin;
-import com.todolist.todolist.dto.UserSignup;
+import com.todolist.todolist.dto.UserSigninDto;
+import com.todolist.todolist.dto.UserSignupDto;
 
 @RestController
-public class User {
+public class AppUserController {
 	
 	
 	@PostMapping("/signin")
-	public Object signIn(@RequestBody UserSignin signin) {
+	public Object signIn(@RequestBody UserSigninDto signin) {
 		if(signin == null) {
 			return "Failed";
 		}
@@ -20,7 +20,7 @@ public class User {
 	}
 	
 	@PostMapping("/signup")
-	public Object signUp(@RequestBody UserSignup signup) {
+	public Object signUp(@RequestBody UserSignupDto signup) {
 		if(signup == null) {
 			return "Failed";
 		}

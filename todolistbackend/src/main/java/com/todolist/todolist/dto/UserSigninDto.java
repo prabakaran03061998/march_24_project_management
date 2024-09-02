@@ -1,6 +1,6 @@
 package com.todolist.todolist.dto;
 
-public class UserSignin {
+public class UserSigninDto {
 
 	private String email;
 	private String password;
@@ -20,7 +20,7 @@ public class UserSignin {
 	}
 	
 	/** constructor **/
-	public UserSignin(String email, String password) {
+	public UserSigninDto(String email, String password) {
 		super();
 		this.email = email;
 		this.password = password;

@@ -8,8 +8,8 @@ const LoginPage = () => {
                 Login
                 <Link to={'/register'}>Open Register</Link>
             </Paper>
-
-
+            
+            <h1>Hello </h1>
         </>
     )
 
