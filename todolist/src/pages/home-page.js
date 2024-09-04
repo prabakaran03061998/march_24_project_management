@@ -1,18 +1,17 @@
 import React from "react";
 import SideBar from "../components/sidebar";
-import BasicTable from "./Status-page";
 import "../style/Home-page.css";
 import Navbar from "../components/NavBar";
+import PageContent from "../components/PageContent";
 
 function Home(){
     return(
     <div className="home-container">
         
         <SideBar className="sidebar"/>
-        {/* ********* ** Ststus Table ** ********** */}
         <div className="table-container">
             <Navbar/>
-            <BasicTable />            
+            <PageContent/>
         </div>
 
     </div>

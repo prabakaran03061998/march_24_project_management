@@ -12,27 +12,30 @@ import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded';
 import NewReleasesRoundedIcon from '@mui/icons-material/NewReleasesRounded';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
+import { useNavigate, useRoutes } from 'react-router-dom';
 
 const mainListItems = [
-  { text: 'Dashboard', icon: <SpaceDashboardIcon />, path: '/dashboard' },
-  { text: 'Task', icon: <AssignmentRoundedIcon />, path: '/todo' },
-  { text: 'Board', icon: <AssessmentRoundedIcon />, path: '/status' },
-  { text: 'Release', icon: <NewReleasesRoundedIcon />, path: '/user' },
+  {id:0, text: 'Dashboard', icon: <SpaceDashboardIcon />, path: '/' },
+  {id:1, text: 'Task', icon: <AssignmentRoundedIcon />, path: '/task' },
+  {id:2, text: 'Board', icon: <AssessmentRoundedIcon />, path: '/status' },
+  {id:3, text: 'Release', icon: <NewReleasesRoundedIcon />, path: '/user' },
 ];
 
 const secondaryListItems = [
-  { text: 'Settings', icon: <SettingsRoundedIcon /> },
-  { text: 'About', icon: <InfoRoundedIcon /> },
-  { text: 'Feedback', icon: <HelpRoundedIcon /> },
+  {id:0, text: 'Settings', icon: <SettingsRoundedIcon /> },
+  {id:1, text: 'About', icon: <InfoRoundedIcon /> },
+  {id:2, text: 'Feedback', icon: <HelpRoundedIcon /> },
 ];
 
-export default function MenuContent() {
+const   MenuContent =  () =>{
+  const navigate=useNavigate();
+  const [selectedPath,setSelectedPath]=React.useState(0);
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
       <List dense>
         {mainListItems.map((item, index) => (
-          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton selected={index === 0}>
+          <ListItem  key={index} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton onClick={()=>{navigate(item.path);setSelectedPath(item.id)}} selected={index === selectedPath}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItemButton>
@@ -53,3 +56,5 @@ export default function MenuContent() {
     </Stack>
   );
 }
+
+export default MenuContent;
