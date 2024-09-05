@@ -1,6 +1,7 @@
 // src/components/Navbar.js
 import React, { useState } from 'react';
 import '../style/Navbar.css';
+import NavButton from '../components/Nav-Button';
 
 
 const Navbar = () => {
@@ -26,9 +27,7 @@ const Navbar = () => {
         />
       </div>
       <div className="button-container">
-        <button className="add-new-button" onClick={handleAddNewClick}>
-          Add New
-        </button>
+      <NavButton/>
       </div>
     </nav>
   );

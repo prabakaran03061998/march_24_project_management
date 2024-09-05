@@ -18,7 +18,7 @@ const mainListItems = [
   {id:0, text: 'Dashboard', icon: <SpaceDashboardIcon />, path: '/' },
   {id:1, text: 'Task', icon: <AssignmentRoundedIcon />, path: '/task' },
   {id:2, text: 'Board', icon: <AssessmentRoundedIcon />, path: '/status' },
-  {id:3, text: 'Release', icon: <NewReleasesRoundedIcon />, path: '/user' },
+  {id:3, text: 'Release', icon: <NewReleasesRoundedIcon />, path: '/release' },
 ];
 
 const secondaryListItems = [
