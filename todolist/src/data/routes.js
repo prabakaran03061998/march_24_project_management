@@ -1,5 +1,5 @@
 
-import React,{Component} from 'react';
+import React from 'react';
 import DashboardPage from '../pages/dashboard-page';
 import BoardPage from '../pages/Status-page';
 import ReleasePage from '../pages/Release-page';
