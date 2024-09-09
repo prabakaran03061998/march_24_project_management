@@ -11,9 +11,9 @@ const Navbar = () => {
     setSearchTerm(event.target.value);
   };
 
-  const handleAddNewClick = () => {
-    alert('Add New button clicked!');
-  };
+  // const handleAddNewClick = () => {
+  //   alert('Add New button clicked!');
+  // };
 
   return (
     <nav className="navbar">

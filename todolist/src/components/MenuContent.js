@@ -12,7 +12,7 @@ import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded';
 import NewReleasesRoundedIcon from '@mui/icons-material/NewReleasesRounded';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import { useNavigate, useRoutes } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const mainListItems = [
   {id:0, text: 'Dashboard', icon: <SpaceDashboardIcon />, path: '/' },

@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
 import routes from "../data/routes";
-import Home from "../pages/home-page";
 import { Suspense } from "react";
 import { CircularProgress } from "@mui/material";
 

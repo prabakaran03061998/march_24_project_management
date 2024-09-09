@@ -4,7 +4,7 @@ import LoginPage from './pages/login-page';
 import RegisterPage from './pages/register-page';
 import HomePage from './pages/home-page';
 import BasicTable from './pages/Status-page';
-import MenuContent from './components/MenuContent';
+
 
 
 function App() {
