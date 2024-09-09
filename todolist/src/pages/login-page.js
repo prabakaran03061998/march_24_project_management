@@ -21,7 +21,6 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import Forgot from './Forgot-page';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
