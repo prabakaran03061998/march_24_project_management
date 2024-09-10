@@ -12,18 +12,11 @@ const generateRandomId = () => {
 
 const BasicButtons = () => {
   const [open, setOpen] = useState(false);
-  const [todo, setTodo] = useState('');
-  const [name, setName] = useState('');
-  const [assign, setAssign] = useState('');
-  const [id, setId] = useState('');
-  const [status, setStatus] = useState('');
-  const [startDate, setStartDate] = useState('');
   const navigate = useNavigate();
 
   const statusOptions = ['Pending', 'In Progress', 'Completed'];
 
   const openpopup = () => {
-    setId(generateRandomId());
     setOpen(true);
   };
 
@@ -32,18 +25,8 @@ const BasicButtons = () => {
   };
 
   const handleSubmit = () => {
-    const newTask = { id, todo, name, assign, status, startDate };
-    const existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    localStorage.setItem('tasks', JSON.stringify([...existingTasks, newTask]));
-
-    setTodo('');
-    setName('');
-    setAssign('');
-    setId('');
-    setStatus('');
-    setStartDate('');
     closepopup();
-    navigate('/tasks'); // Navigate to the table page
+    navigate('/task'); // Navigate to the table page
   };
 
   return (
@@ -60,8 +43,6 @@ const BasicButtons = () => {
             type="text"
             fullWidth
             variant="outlined"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
             disabled
           />
           <TextField
@@ -70,8 +51,6 @@ const BasicButtons = () => {
             type="text"
             fullWidth
             variant="outlined"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
             sx={{ mt: 2 }}
           />
           <TextField
@@ -80,8 +59,6 @@ const BasicButtons = () => {
             type="text"
             fullWidth
             variant="outlined"
-            value={todo}
-            onChange={(e) => setTodo(e.target.value)}
             sx={{ mt: 2 }}
           />
           <TextField
@@ -90,15 +67,11 @@ const BasicButtons = () => {
             type="text"
             fullWidth
             variant="outlined"
-            value={assign}
-            onChange={(e) => setAssign(e.target.value)}
             sx={{ mt: 2 }}
           />
           <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
             <InputLabel>Status</InputLabel>
             <Select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
               label="Status"
             >
               {statusOptions.map((option) => (
@@ -114,8 +87,6 @@ const BasicButtons = () => {
             type="date"
             fullWidth
             variant="outlined"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
             InputLabelProps={{ shrink: true }}
             sx={{ mt: 2 }}
           />

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
+import axios from 'axios';
+import { TASK_SAVE } from '../api-services/API-URL';
 
 const columnStyles = {
   id: { width: 60 },
@@ -15,15 +17,20 @@ const columnStyles = {
 const TaskTable = () => {
   const [tasks, setTasks] = useState([]);
 
+  const getAllTasks = () =>{
+    axios.get(TASK_SAVE).then(res=>{
+      setTasks(res.data);
+    }).catch(err=>console.log(err))
+  }
+
   useEffect(() => {
-    const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    setTasks(storedTasks);
+    getAllTasks();
   }, []);
 
   const handleDelete = (id) => {
     const updatedTasks = tasks.filter(task => task.id !== id);
     setTasks(updatedTasks);
-    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    localStorage.setItem('task', JSON.stringify(updatedTasks));
   };
 
   return (
