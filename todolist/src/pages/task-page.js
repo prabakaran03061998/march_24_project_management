@@ -1,8 +1,28 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
-import axios from 'axios';
-import { TASK_SAVE } from '../api-services/API-URL';
+import * as React from "react";
+import { useState, useEffect } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  DialogActions,
+  TextField,
+  MenuItem,
+  InputLabel,
+  Select,
+  FormControl,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Stack,
+} from "@mui/material";
+import axios from "axios";
+import { TASK_SAVE,TASK_GET } from "../api-services/API-URL";
+import statusOptions from "../data/status.json";
 
 const columnStyles = {
   id: { width: 60 },
@@ -11,56 +31,210 @@ const columnStyles = {
   assign: { width: 150 },
   status: { width: 100 },
   startDate: { width: 120 },
-  actions: { width: 100 }
+  actions: { width: 100 },
 };
 
 const TaskTable = () => {
   const [tasks, setTasks] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [taskData, setTaskData] = useState({
+    id: 0,
+    taskId: "",
+    name: "",
+    description: "",
+    assignee: "",
+    status: "OPEN",
+    startDate: "",
+  });
 
-  const getAllTasks = () =>{
-    axios.get(TASK_SAVE).then(res=>{
-      setTasks(res.data);
-    }).catch(err=>console.log(err))
-  }
+  const getAllTasks = () => {
+    axios({
+      url: TASK_GET,
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        setTasks(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     getAllTasks();
   }, []);
 
   const handleDelete = (id) => {
-    const updatedTasks = tasks.filter(task => task.id !== id);
+    const updatedTasks = tasks.filter((task) => task.id !== id);
     setTasks(updatedTasks);
-    localStorage.setItem('task', JSON.stringify(updatedTasks));
+    localStorage.setItem("task", JSON.stringify(updatedTasks));
+  };
+
+  const openpopup = () => {
+    setOpen(true);
+  };
+
+  const closepopup = () => {
+    setOpen(false);
+  };
+
+  const handleChange= (event) =>{
+    const {name,value}=event.target;
+    setTaskData((prevState) => ({ 
+      ...prevState,
+      [name]:value
+   }))
+  }
+
+  const handleSubmitTask = () => {
+    console.log(taskData);
+     axios({
+      url: TASK_SAVE,
+      method: "post",
+      data:taskData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        getAllTasks()
+        closepopup();
+      })
+      .catch((err) => console.log(err));
+
   };
 
   return (
     <div>
+      <>
+        <Stack spacing={3} direction="row">
+          <Button onClick={openpopup} variant="contained">
+            Add Task
+          </Button>
+        </Stack>
+        <Dialog open={open} onClose={closepopup} fullWidth maxWidth="sm">
+          <DialogTitle>Add To-Do Item</DialogTitle>
+          <DialogContent>
+            <TextField
+              margin="dense"
+              label="Task ID"
+              name="taskId"
+              type="text"
+              value={taskData.taskId}
+              onChange={handleChange}
+              fullWidth
+              variant="outlined"
+            />
+            <TextField
+              margin="dense"
+              label="Name"
+              type="text"
+              name="name"
+              value={taskData.name}
+              onChange={handleChange}
+              fullWidth
+              variant="outlined"
+              sx={{ mt: 2 }}
+            />
+            <TextField
+              margin="dense"
+              label="Description"
+              type="text"
+              onChange={handleChange}
+              name="description"
+              fullWidth
+              value={taskData.description}
+              variant="outlined"
+              sx={{ mt: 2 }}
+            />
+            <TextField
+              margin="dense"
+              label="Assignee"
+              onChange={handleChange}
+              name="assignee"
+              type="text"
+              value={taskData.assignee}
+              fullWidth
+              variant="outlined"
+              sx={{ mt: 2 }}
+            />
+            <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
+              <InputLabel>Status</InputLabel>
+              <Select label="Status"
+              name="status"
+              onChange={handleChange}
+              value={taskData.status}
+              >
+                {statusOptions.map((option) => (
+                  <MenuItem key={option.code} value={option.code}>
+                    {option.status}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <TextField
+              margin="dense"
+              label="Start Date"
+              type="date"
+              name="startDate"
+              onChange={handleChange}
+              value={taskData.startDate}
+              fullWidth
+              variant="outlined"
+              InputLabelProps={{ shrink: true }}
+              sx={{ mt: 2 }}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={closepopup} color="primary">
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSubmitTask}
+              variant="contained"
+              color="primary"
+            >
+              Add
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell style={columnStyles.id}>ID</TableCell>
+              <TableCell style={columnStyles.id}>S.No</TableCell>
+              <TableCell style={columnStyles.name}>Task ID</TableCell>
               <TableCell style={columnStyles.name}>Name</TableCell>
-              <TableCell style={columnStyles.todo}>To-Do</TableCell>
-              <TableCell style={columnStyles.assign}>Assign</TableCell>
+              <TableCell style={columnStyles.todo}>Description</TableCell>
+              <TableCell style={columnStyles.assign}>Assignee</TableCell>
               <TableCell style={columnStyles.status}>Status</TableCell>
               <TableCell style={columnStyles.startDate}>Start Date</TableCell>
               <TableCell style={columnStyles.actions}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {tasks.map((task) => (
+            {tasks.map((task, index) => (
               <TableRow key={task.id}>
-                <TableCell style={columnStyles.id}>{task.id}</TableCell>
+                <TableCell style={columnStyles.id}>{index + 1}</TableCell>
+                <TableCell style={columnStyles.name}>{task.taskId}</TableCell>
                 <TableCell style={columnStyles.name}>{task.name}</TableCell>
-                <TableCell style={columnStyles.todo}>{task.todo}</TableCell>
-                <TableCell style={columnStyles.assign}>{task.assign}</TableCell>
+                <TableCell style={columnStyles.todo}>
+                  {task.description}
+                </TableCell>
+                <TableCell style={columnStyles.assign}>
+                  {task.assignee}
+                </TableCell>
                 <TableCell style={columnStyles.status}>{task.status}</TableCell>
-                <TableCell style={columnStyles.startDate}>{task.startDate}</TableCell>
+                <TableCell style={columnStyles.startDate}>
+                  {task.startDate}
+                </TableCell>
                 <TableCell style={columnStyles.actions}>
-                  <Button 
-                    variant="contained" 
-                    color="error" 
+                  <Button
+                    variant="contained"
+                    color="error"
                     onClick={() => handleDelete(task.id)}
                   >
                     Remove

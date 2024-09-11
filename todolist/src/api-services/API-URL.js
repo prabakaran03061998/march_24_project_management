@@ -1,3 +1,4 @@
-const BASE_URL="http://192.168.1.11:8080"
+const BASE_URL="http://localhost:8000"
 
-export const TASK_SAVE=`${BASE_URL}/task/get/all`;
+export const TASK_SAVE=`${BASE_URL}/task/save`;
+export const TASK_GET=`${BASE_URL}/task/get/all`

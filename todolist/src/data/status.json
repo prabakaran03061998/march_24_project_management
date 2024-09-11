@@ -1,0 +1,17 @@
+[
+    {
+
+        "status":"Open",
+        "code":"OPEN"
+    },
+    {
+
+        "status":"In Progress",
+        "code":"INP"
+    },
+    {
+
+        "status":"Completed",
+        "code":"COMP"
+    }
+]
