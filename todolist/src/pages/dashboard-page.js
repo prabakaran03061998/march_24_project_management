@@ -12,31 +12,29 @@ const data = [
 ///////
 
 ///////// passing colors for chart //////
-const COLORS = ['blue', 'brown', 'green'];
-// const COLORS1 = ['blue', 'brown', 'green'];
-
+const COLORS = ['#4E91DD', '#E34A46', '#32C3A4'];
 
 function Dashboard() {
   return (
     <Container>
-      <Typography variant="h4" gutterBottom align="center" color='orange'>
+      <Typography variant="h4" gutterBottom align="center" color='black' fontFamily={'inherit'}>
         Status Dashboard
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} md={4}>
-          <Paper elevation={3} sx={{ padding: 2, textAlign: 'center',color:'blue',background:'black',  boxShadow: 5,borderColor: 'blue'  }}>
+          <Paper elevation={3} sx={{ padding: 2, textAlign: 'center',color:'#E34A46',  boxShadow: 5,borderColor: 'blue'  }}>
             <Typography variant="h6">Processing</Typography>
             <Typography variant="h4">400</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Paper elevation={3} sx={{ padding: 2, textAlign: 'center',color:'brown',background:'black' }}>
+          <Paper elevation={3} sx={{ padding: 2, textAlign: 'center',color:'#4E91DD', boxShadow: 5 }}>
             <Typography variant="h6">Pending</Typography>
             <Typography variant="h4">300</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Paper elevation={3} sx={{ padding: 2, textAlign: 'center',color:'green',background:'black' }}>
+          <Paper elevation={3} sx={{ padding: 2, textAlign: 'center',color:'#32C3A4', boxShadow: 5 }}>
             <Typography variant="h6">Completed</Typography>
             <Typography variant="h4">300</Typography>
           </Paper>
@@ -46,7 +44,7 @@ function Dashboard() {
 
 {/************ char desingn   *********** */ }
 
-      <Box sx={{ marginTop: 8, textAlign: 'center',color:'blue' }}>
+      <Box sx={{ marginTop: 2, textAlign: 'center',color:'black' }}>
         <Typography variant="h4" gutterBottom>
           Status Distribution
         </Typography> 
@@ -75,17 +73,17 @@ function Dashboard() {
       </Box>
 
       {/* {/* Bar Chart  */}
-       <Box sx={{ marginTop: 8, textAlign: 'center' }}> 
-         <Typography variant="h4" gutterBottom color='brown'>
+       <Box sx={{ marginTop: 8, textAlign: 'center'}}> 
+         {/* <Typography variant="h4" gutterBottom color='black'>
           Status Distribution
-        </Typography>
+        </Typography> */}
         <BarChart width={600} height={400} data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="value" fill="green" />
+          <Bar dataKey="value" fill="#2F63A0" />
         </BarChart> 
       </Box> 
 

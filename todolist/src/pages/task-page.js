@@ -19,6 +19,8 @@ import {
   DialogTitle,
   DialogContent,
   Stack,
+  Box,
+  styled,
 } from "@mui/material";
 import axios from "axios";
 import { TASK_SAVE,TASK_GET } from "../api-services/API-URL";
@@ -46,6 +48,13 @@ const TaskTable = () => {
     status: "OPEN",
     startDate: "",
   });
+
+  const StyledTableHeadCell = styled(TableCell)(({ theme }) => ({
+    backgroundColor: theme.palette.info.main,
+    color: theme.palette.info.contrastText,
+    fontWeight: theme.typography.fontWeightBold,
+    border: `1px solid ${theme.palette.divider}`,
+  }));
 
   const getAllTasks = () => {
     axios({
@@ -109,11 +118,13 @@ const TaskTable = () => {
   return (
     <div>
       <>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
         <Stack spacing={3} direction="row">
           <Button onClick={openpopup} variant="contained">
             Add Task
           </Button>
-        </Stack>
+        </Stack>  
+      </Box>   
         <Dialog open={open} onClose={closepopup} fullWidth maxWidth="sm">
           <DialogTitle>Add To-Do Item</DialogTitle>
           <DialogContent>
@@ -205,14 +216,14 @@ const TaskTable = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell style={columnStyles.id}>S.No</TableCell>
-              <TableCell style={columnStyles.name}>Task ID</TableCell>
-              <TableCell style={columnStyles.name}>Name</TableCell>
-              <TableCell style={columnStyles.todo}>Description</TableCell>
-              <TableCell style={columnStyles.assign}>Assignee</TableCell>
-              <TableCell style={columnStyles.status}>Status</TableCell>
-              <TableCell style={columnStyles.startDate}>Start Date</TableCell>
-              <TableCell style={columnStyles.actions}>Actions</TableCell>
+            <StyledTableHeadCell style={columnStyles.id}>S.No</StyledTableHeadCell>
+              <StyledTableHeadCell style={columnStyles.name}>Task ID</StyledTableHeadCell>
+              <StyledTableHeadCell style={columnStyles.name}>Name</StyledTableHeadCell>
+              <StyledTableHeadCell style={columnStyles.todo}>Description</StyledTableHeadCell>
+              <StyledTableHeadCell style={columnStyles.assign}>Assignee</StyledTableHeadCell>
+              <StyledTableHeadCell style={columnStyles.status}>Status</StyledTableHeadCell>
+              <StyledTableHeadCell style={columnStyles.startDate}>Start Date</StyledTableHeadCell>
+              <StyledTableHeadCell style={columnStyles.actions}>Actions</StyledTableHeadCell>
             </TableRow>
           </TableHead>
           <TableBody>
