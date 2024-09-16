@@ -13,73 +13,99 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long RollNo;
+	private long id;
 	
-	@Column(name="username")
-	private String UserName;
+	@Column(name="userId")
+	private String userId;
 	
-	@Column(name="useremailid")
-	private String UserEmailid;
+	@Column(name="name")
+	private String name;
 	
-	@Column(name="userphoneno")
-	private long PhoneNo;
+	@Column(name="emailid")
+	private String emailId;
 	
-	@Column(name="userreport")
-	private String UserReport;
+	@Column(name="phoneNo")
+	private long phoneNo;
 	
-	@Column(name="userdestignation")
-	private String Destignation;
+	@Column(name="report")
+	private String report;
 	
-		public long getRollNo() {
-			return RollNo;
-		}
-		public void setRollNo(long rollNo) {
-			RollNo = rollNo;
-		}
-		public String getUserName() {
-			return UserName;
-		}
-		public void setUserName(String userName) {
-			UserName = userName;
-		}
-		public String getUserEmailid() {
-			return UserEmailid;
-		}
-		public void setUserEmailid(String userEmailid) {
-			UserEmailid = userEmailid;
-		}
-		public long getPhoneNo() {
-			return PhoneNo;
-		}
-		public void setPhoneNo(long phoneNo) {
-			PhoneNo = phoneNo;
-		}
-		public String getUserReport() {
-			return UserReport;
-		}
-		public void setUserReport(String userReport) {
-			UserReport = userReport;
-		}
-		public String getDestignation() {
-			return Destignation;
-		}
-		public void setDestignation(String destignation) {
-			Destignation = destignation;
-		}
-		public User(long rollNo, String userName, String userEmailid, long phoneNo, String userReport,
-				String destignation) {
-			super();
-			RollNo = rollNo;
-			UserName = userName;
-			UserEmailid = userEmailid;
-			PhoneNo = phoneNo;
-			UserReport = userReport;
-		}
-		public User() {
-			super();
-			// TODO Auto-generated constructor stub
-		}
-		
+	@Column(name="destignation")
+	private String destignation;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+	public long getPhoneNo() {
+		return phoneNo;
+	}
+
+	public void setPhoneNo(long phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+
+	public String getReport() {
+		return report;
+	}
+
+	public void setReport(String report) {
+		this.report = report;
+	}
+
+	public String getDestignation() {
+		return destignation;
+	}
+
+	public void setDestignation(String destignation) {
+		this.destignation = destignation;
+	}
+
+	public User(long id, String userId, String name, String emailId, long phoneNo, String report, String destignation) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.name = name;
+		this.emailId = emailId;
+		this.phoneNo = phoneNo;
+		this.report = report;
+		this.destignation = destignation;
+	}
+
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 		
 		
 		

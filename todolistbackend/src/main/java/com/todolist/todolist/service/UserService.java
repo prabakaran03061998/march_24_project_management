@@ -6,9 +6,9 @@ import com.todolist.todolist.dto.UserDto;
 import com.todolist.todolist.model.User;
 
 public interface UserService {
-	
-	User saveUser(UserDto userDto);
-	
+
+	public User saveUser(UserDto userDto);
+
 	List<User> getAllUser();
 
 }

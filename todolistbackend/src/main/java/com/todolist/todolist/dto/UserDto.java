@@ -2,60 +2,88 @@ package com.todolist.todolist.dto;
 
 public class UserDto {
 	
-	private long RollNo;
-	private String UserName;
-	private String UserEmailid;
-	private long PhoneNo;
-	private String UserReport;
-	private String Destignation;
+	private int id;
+	private String userId;
+	private String userName;
+	private String userEmailid;
+	private long phoneNo;
+	private String userReport;
+	private String destignation;
 	
 	
-	public long getRollNo() {
-		return RollNo;
+	
+	
+	public int getId() {
+		return id;
 	}
-	public void setRollNo(long rollNo) {
-		RollNo = rollNo;
+
+	public void setId(int id) {
+		this.id = id;
 	}
+	
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	public String getUserName() {
-		return UserName;
+		return userName;
 	}
+
 	public void setUserName(String userName) {
-		UserName = userName;
+		this.userName = userName;
 	}
+
 	public String getUserEmailid() {
-		return UserEmailid;
+		return userEmailid;
 	}
+
 	public void setUserEmailid(String userEmailid) {
-		UserEmailid = userEmailid;
+		this.userEmailid = userEmailid;
 	}
+
 	public long getPhoneNo() {
-		return PhoneNo;
+		return phoneNo;
 	}
+
 	public void setPhoneNo(long phoneNo) {
-		PhoneNo = phoneNo;
+		this.phoneNo = phoneNo;
 	}
+
 	public String getUserReport() {
-		return UserReport;
+		return userReport;
 	}
+
 	public void setUserReport(String userReport) {
-		UserReport = userReport;
+		this.userReport = userReport;
 	}
+
 	public String getDestignation() {
-		return Destignation;
+		return destignation;
 	}
+
 	public void setDestignation(String destignation) {
-		Destignation = destignation;
+		this.destignation = destignation;
 	}
-	public UserDto(long rollNo, String userName, String userEmailid, long phoneNo, String userReport,
+	
+	public UserDto(int id, String userId, String userName, String userEmailid, long phoneNo, String userReport,
 			String destignation) {
 		super();
-		RollNo = rollNo;
-		UserName = userName;
-		UserEmailid = userEmailid;
-		PhoneNo = phoneNo;
-		UserReport = userReport;
-		Destignation = destignation;
+		this.id = id;
+		this.userId = userId;
+		this.userName = userName;
+		this.userEmailid = userEmailid;
+		this.phoneNo = phoneNo;
+		this.userReport = userReport;
+		this.destignation = destignation;
 	}
+
+
+
+
 	public UserDto() {
 		super();
 		// TODO Auto-generated constructor stub

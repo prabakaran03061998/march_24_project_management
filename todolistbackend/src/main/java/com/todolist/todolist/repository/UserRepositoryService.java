@@ -5,9 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.todolist.todolist.model.User;
 
-@Repository
 
-public interface UserRepositoryService extends JpaRepository<User,Long>{
+@Repository
+public interface UserRepositoryService extends JpaRepository<User, Long>{
 	
 	
 	

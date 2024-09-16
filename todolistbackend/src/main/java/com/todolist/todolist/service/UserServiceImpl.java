@@ -11,30 +11,27 @@ import com.todolist.todolist.model.User;
 import com.todolist.todolist.repository.UserRepositoryService;
 
 @Service
-
 public class UserServiceImpl implements UserService {
-	
+
 	@Autowired
-	UserRepositoryService userRepositoryService;
-	
+	private UserRepositoryService userRepositoryService;
+
 	@Override
 	public User saveUser(UserDto userDto) {
 		try {
-			User user=new User();
-			user.setRollNo(userDto.getRollNo());
-			user.setUserEmailid(userDto.getUserEmailid());
-			user.setUserName(userDto.getUserName());
+			User user = new User();
+			user.setId(userDto.getId());
+			user.setUserId(userDto.getUserId());
+			user.setEmailId(userDto.getUserEmailid());
 			user.setPhoneNo(userDto.getPhoneNo());
+			user.setReport(userDto.getUserReport());
 			user.setDestignation(userDto.getDestignation());
-			user.setUserReport(userDto.getUserReport());
 			return userRepositoryService.save(user);
-			
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.println(e.getMessage());
 			return null;
 		}
-		
+
 	}
 
 	@Override
@@ -42,11 +39,9 @@ public class UserServiceImpl implements UserService {
 		try {
 			return userRepositoryService.findAll();
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.println(e.getMessage());
 			return new ArrayList<>();
 		}
 	}
-	
 
 }
