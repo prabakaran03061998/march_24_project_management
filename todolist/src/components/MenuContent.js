@@ -22,20 +22,21 @@ const mainListItems = [
 ];
 
 const secondaryListItems = [
-  {id:0, text: 'Settings', icon: <SettingsRoundedIcon /> },
-  {id:1, text: 'About', icon: <InfoRoundedIcon /> },
-  {id:2, text: 'Feedback', icon: <HelpRoundedIcon /> },
+  {id:0, text: 'Settings', icon: <SettingsRoundedIcon />, path: '/Settings' },
+  {id:1, text: 'About', icon: <InfoRoundedIcon />, path: '/About' },
+  {id:2, text: 'Feedback', icon: <HelpRoundedIcon />, path: '/Feedback' },
 ];
 
 const   MenuContent =  () =>{
   const navigate=useNavigate();
   const [selectedPath,setSelectedPath]=React.useState(0);
+  const [selectedPaths,setSelectedPaths]=React.useState(0);  
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
       <List dense>
         {mainListItems.map((item, index) => (
           <ListItem  key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton onClick={()=>{navigate(item.path);setSelectedPath(item.id)}} selected={index === selectedPath}>
+            <ListItemButton onClick={()=>{navigate(item.path);setSelectedPath(item.id)}} selected ={index === selectedPath}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItemButton>
@@ -46,7 +47,7 @@ const   MenuContent =  () =>{
       <List dense>
         {secondaryListItems.map((item, index) => (
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton>
+            <ListItemButton onClick={()=>{navigate(item.path);setSelectedPaths(item.id)}} selected ={index === selectedPaths}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItemButton>

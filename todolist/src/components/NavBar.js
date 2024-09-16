@@ -3,6 +3,7 @@ import '../style/Navbar.css';
 import { useLocation } from 'react-router-dom';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -33,13 +34,16 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="search-container">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-          className="search-bar"
-        />
+        <div className="search-input-container">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className="search-bar"
+          />
+          <SearchOutlinedIcon className="search-icon" color='action'/>
+        </div>
       </div>
       <div className="button-container">
         <LogoutOutlinedIcon 

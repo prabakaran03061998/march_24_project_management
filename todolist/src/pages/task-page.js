@@ -220,7 +220,7 @@ const TaskTable = () => {
               <StyledTableHeadCell style={columnStyles.name}>Task ID</StyledTableHeadCell>
               <StyledTableHeadCell style={columnStyles.name}>Name</StyledTableHeadCell>
               <StyledTableHeadCell style={columnStyles.todo}>Description</StyledTableHeadCell>
-              <StyledTableHeadCell style={columnStyles.assign}>Assignee</StyledTableHeadCell>
+              <StyledTableHeadCell style={columnStyles.assign}>Assign</StyledTableHeadCell>
               <StyledTableHeadCell style={columnStyles.status}>Status</StyledTableHeadCell>
               <StyledTableHeadCell style={columnStyles.startDate}>Start Date</StyledTableHeadCell>
               <StyledTableHeadCell style={columnStyles.actions}>Actions</StyledTableHeadCell>
