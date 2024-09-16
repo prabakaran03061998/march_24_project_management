@@ -1,12 +1,19 @@
 package com.todolist.todolist.dto;
 
 public class ProjectDto {
+	private long id;
 	private long projectId;
 	private String projectCode;
 	private String projectName;
 	private String projectDescription;
 	private long startDate;
 	private String endDate;
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public long getProjectId() {
 		return projectId;
 	}
@@ -43,9 +50,10 @@ public class ProjectDto {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	public ProjectDto(long projectId, String projectCode, String projectName, String projectDescription, long startDate,
-			String endDate) {
+	public ProjectDto(long id, long projectId, String projectCode, String projectName, String projectDescription,
+			long startDate, String endDate) {
 		super();
+		this.id = id;
 		this.projectId = projectId;
 		this.projectCode = projectCode;
 		this.projectName = projectName;
@@ -57,6 +65,7 @@ public class ProjectDto {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	
 	
 }
