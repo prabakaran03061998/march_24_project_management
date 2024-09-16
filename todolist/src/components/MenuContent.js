@@ -13,12 +13,14 @@ import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded';
 import NewReleasesRoundedIcon from '@mui/icons-material/NewReleasesRounded';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import { useNavigate } from 'react-router-dom';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 
 const mainListItems = [
   {id:0, text: 'Dashboard', icon: <SpaceDashboardIcon />, path: '/' },
   {id:1, text: 'Task', icon: <AssignmentRoundedIcon />, path: '/task' },
   {id:2, text: 'Board', icon: <AssessmentRoundedIcon />, path: '/status' },
   {id:3, text: 'Release', icon: <NewReleasesRoundedIcon />, path: '/release' },
+  {id:4, text: 'User', icon: <PersonRoundedIcon />, path: '/user' },
 ];
 
 const secondaryListItems = [
