@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../style/Navbar.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
@@ -9,6 +9,7 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
   const location = useLocation(); 
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -23,8 +24,11 @@ const Navbar = () => {
   };
 
   const handleConfirmLogout = () => {
-    // Implement your actual logout logic here
-    alert('Logged out successfully!');
+    // alert('Logged out successfully!');
+    
+    // Redirect to login page
+    navigate('/login');
+    
     setOpenLogoutDialog(false);
   };
 

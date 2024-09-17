@@ -21,11 +21,14 @@ import {
   Stack,
   Box,
   styled,
-  TablePagination, // Import TablePagination
+  TablePagination,
+  Chip,
 } from "@mui/material";
 import axios from "axios";
 import { TASK_SAVE, TASK_GET } from "../api-services/API-URL";
 import statusOptions from "../data/status.json";
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 
 const columnStyles = {
   id: { width: 60 },
@@ -37,9 +40,17 @@ const columnStyles = {
   actions: { width: 100 },
 };
 
+const StyledTableHeadCell = styled(TableCell)(({ theme }) => ({
+  backgroundColor: theme.palette.info.main,
+  color: theme.palette.info.contrastText,
+  fontWeight: theme.typography.fontWeightBold,
+  border: `1px solid ${theme.palette.divider}`,
+}));
+
 const TaskTable = () => {
   const [tasks, setTasks] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [openAdd, setOpenAdd] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
   const [taskData, setTaskData] = useState({
     id: 0,
     taskId: "",
@@ -49,17 +60,12 @@ const TaskTable = () => {
     status: "OPEN",
     startDate: "",
   });
-  
+
+  const [editingTaskId, setEditingTaskId] = useState(null); // Track which task is being edited
+
   // Pagination state
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const StyledTableHeadCell = styled(TableCell)(({ theme }) => ({
-    backgroundColor: theme.palette.info.main,
-    color: theme.palette.info.contrastText,
-    fontWeight: theme.typography.fontWeightBold,
-    border: `1px solid ${theme.palette.divider}`,
-  }));
 
   const getAllTasks = () => {
     axios({
@@ -70,7 +76,6 @@ const TaskTable = () => {
       },
     })
       .then((res) => {
-        console.log(res.data);
         setTasks(res.data);
       })
       .catch((err) => console.log(err));
@@ -86,12 +91,22 @@ const TaskTable = () => {
     localStorage.setItem("task", JSON.stringify(updatedTasks));
   };
 
-  const openpopup = () => {
-    setOpen(true);
+  const openAddPopup = () => {
+    setOpenAdd(true);
   };
 
-  const closepopup = () => {
-    setOpen(false);
+  const closeAddPopup = () => {
+    setOpenAdd(false);
+  };
+
+  const openEditPopup = (task) => {
+    setTaskData(task);
+    setEditingTaskId(task.id);
+    setOpenEdit(true);
+  };
+
+  const closeEditPopup = () => {
+    setOpenEdit(false);
   };
 
   const handleChange = (event) => {
@@ -103,7 +118,6 @@ const TaskTable = () => {
   };
 
   const handleSubmitTask = () => {
-    console.log(taskData);
     axios({
       url: TASK_SAVE,
       method: "post",
@@ -114,7 +128,23 @@ const TaskTable = () => {
     })
       .then((res) => {
         getAllTasks();
-        closepopup();
+        closeAddPopup();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleUpdateTask = () => {
+    axios({
+      url: `${TASK_SAVE}/${editingTaskId}`,
+      method: "put",
+      data: taskData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        getAllTasks();
+        closeEditPopup();
       })
       .catch((err) => console.log(err));
   };
@@ -129,104 +159,189 @@ const TaskTable = () => {
     setPage(0);
   };
 
-  // Paginated data
   const paginatedTasks = tasks.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   return (
     <div>
-      <>
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
-          <Stack spacing={3} direction="row">
-            <Button onClick={openpopup} variant="contained">
-              Add Task
-            </Button>
-          </Stack>
-        </Box>
-        <Dialog open={open} onClose={closepopup} fullWidth maxWidth="sm">
-          <DialogTitle>Add To-Do Item</DialogTitle>
-          <DialogContent>
-            <TextField
-              margin="dense"
-              label="Task ID"
-              name="taskId"
-              type="text"
-              value={taskData.taskId}
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <Stack spacing={3} direction="row">
+          <Button onClick={openAddPopup} variant="contained">
+            Add Task
+          </Button>
+        </Stack>
+      </Box>
+
+      {/* Add Task Dialog */}
+      <Dialog open={openAdd} onClose={closeAddPopup} fullWidth maxWidth="sm">
+        <DialogTitle>Add To-Do Item</DialogTitle>
+        <DialogContent>
+          <TextField
+            margin="dense"
+            label="Task ID"
+            name="taskId"
+            type="text"
+            value={taskData.taskId}
+            onChange={handleChange}
+            fullWidth
+            variant="outlined"
+          />
+          <TextField
+            margin="dense"
+            label="Name"
+            type="text"
+            name="name"
+            value={taskData.name}
+            onChange={handleChange}
+            fullWidth
+            variant="outlined"
+            sx={{ mt: 2 }}
+          />
+          <TextField
+            margin="dense"
+            label="Description"
+            type="text"
+            onChange={handleChange}
+            name="description"
+            fullWidth
+            value={taskData.description}
+            variant="outlined"
+            sx={{ mt: 2 }}
+          />
+          <TextField
+            margin="dense"
+            label="Assignee"
+            onChange={handleChange}
+            name="assignee"
+            type="text"
+            value={taskData.assignee}
+            fullWidth
+            variant="outlined"
+            sx={{ mt: 2 }}
+          />
+          <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
+            <InputLabel>Status</InputLabel>
+            <Select
+              label="Status"
+              name="status"
               onChange={handleChange}
-              fullWidth
-              variant="outlined"
-            />
-            <TextField
-              margin="dense"
-              label="Name"
-              type="text"
-              name="name"
-              value={taskData.name}
+              value={taskData.status}
+            >
+              {statusOptions.map((option) => (
+                <MenuItem key={option.code} value={option.code}>
+                  {option.status}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <TextField
+            margin="dense"
+            label="Start Date"
+            type="date"
+            name="startDate"
+            onChange={handleChange}
+            value={taskData.startDate}
+            fullWidth
+            variant="outlined"
+            InputLabelProps={{ shrink: true }}
+            sx={{ mt: 2 }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeAddPopup} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleSubmitTask} variant="contained" color="primary">
+            Add
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Edit Task Dialog */}
+      <Dialog open={openEdit} onClose={closeEditPopup} fullWidth maxWidth="sm">
+        <DialogTitle>Edit To-Do Item</DialogTitle>
+        <DialogContent>
+          <TextField
+            margin="dense"
+            label="Task ID"
+            name="taskId"
+            type="text"
+            value={taskData.taskId}
+            onChange={handleChange}
+            fullWidth
+            variant="outlined"
+            disabled
+          />
+          <TextField
+            margin="dense"
+            label="Name"
+            type="text"
+            name="name"
+            value={taskData.name}
+            onChange={handleChange}
+            fullWidth
+            variant="outlined"
+            sx={{ mt: 2 }}
+          />
+          <TextField
+            margin="dense"
+            label="Description"
+            type="text"
+            onChange={handleChange}
+            name="description"
+            fullWidth
+            value={taskData.description}
+            variant="outlined"
+            sx={{ mt: 2 }}
+          />
+          <TextField
+            margin="dense"
+            label="Assignee"
+            onChange={handleChange}
+            name="assignee"
+            type="text"
+            value={taskData.assignee}
+            fullWidth
+            variant="outlined"
+            sx={{ mt: 2 }}
+          />
+          <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
+            <InputLabel>Status</InputLabel>
+            <Select
+              label="Status"
+              name="status"
               onChange={handleChange}
-              fullWidth
-              variant="outlined"
-              sx={{ mt: 2 }}
-            />
-            <TextField
-            
-              margin="dense"
-              label="Description"
-              type="text"
-              onChange={handleChange}
-              name="description"
-              fullWidth
-              value={taskData.description}
-              variant="outlined"
-              sx={{ mt: 2 }}
-            />
-            <TextField
-              margin="dense"
-              label="Assignee"
-              onChange={handleChange}
-              name="assignee"
-              type="text"
-              value={taskData.assignee}
-              fullWidth
-              variant="outlined"
-              sx={{ mt: 2 }}
-            />
-            <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
-              <InputLabel>Status</InputLabel>
-              <Select
-                label="Status"
-                name="status"
-                onChange={handleChange}
-                value={taskData.status}
-              >
-                {statusOptions.map((option) => (
-                  <MenuItem key={option.code} value={option.code}>
-                    {option.status}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <TextField
-              margin="dense"
-              label="Start Date"
-              type="date"
-              name="startDate"
-              onChange={handleChange}
-              value={taskData.startDate}
-              fullWidth
-              variant="outlined"
-              InputLabelProps={{ shrink: true }}
-              sx={{ mt: 2 }}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={closepopup} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleSubmitTask} variant="contained" color="primary">
-              Add
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </>
+              value={taskData.status}
+            >
+              {statusOptions.map((option) => (
+                <MenuItem key={option.code} value={option.code}>
+                  {option.status}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <TextField
+            margin="dense"
+            label="Start Date"
+            type="date"
+            name="startDate"
+            onChange={handleChange}
+            value={taskData.startDate}
+            fullWidth
+            variant="outlined"
+            InputLabelProps={{ shrink: true }}
+            sx={{ mt: 2 }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeEditPopup} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleUpdateTask} variant="contained" color="primary">
+            Update
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -249,16 +364,30 @@ const TaskTable = () => {
                 <TableCell style={columnStyles.name}>{task.name}</TableCell>
                 <TableCell style={columnStyles.todo}>{task.description}</TableCell>
                 <TableCell style={columnStyles.assign}>{task.assignee}</TableCell>
-                <TableCell style={columnStyles.status}>{task.status}</TableCell>
+                <TableCell style={columnStyles.status}>
+                  <Chip
+                    label={task.status}
+                    variant="outlined"
+                  />
+                </TableCell>
                 <TableCell style={columnStyles.startDate}>{task.startDate}</TableCell>
                 <TableCell style={columnStyles.actions}>
-                  <Button
-                    variant="contained"
-                    color="error"
-                    onClick={() => handleDelete(task.id)}
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
                   >
-                    Remove
-                  </Button>
+                    <EditNoteIcon
+                      color="action"
+                      sx={{ marginRight: 1, fontSize: 20 }}
+                      onClick={() => openEditPopup(task)}
+                    />
+                    <DeleteSweepIcon
+                      color="error"
+                      onClick={() => handleDelete(task.id)}
+                      sx={{ fontSize: 20 }}
+                    />
+                  </Box>
                 </TableCell>
               </TableRow>
             ))}
