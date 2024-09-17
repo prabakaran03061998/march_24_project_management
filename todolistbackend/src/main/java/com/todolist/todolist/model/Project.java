@@ -114,7 +114,7 @@ public class Project {
 	private long id;
 	
 	@Column(name="projectId")
-	private long projectId;
+	private String projectId;
 	
 	@Column(name="projectCode")
 	private String projectCode;
@@ -126,10 +126,10 @@ public class Project {
 	private String projectDescription;
 	
 	@Column(name="startDate")
-	private long startDate;
+	private String startDate;
 	
 	@Column(name="endDate")
-	private long endDate;
+	private String endDate;
 	
 	
 	public long getId() {
@@ -138,10 +138,10 @@ public class Project {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public long getProjectId() {
+	public String getProjectId() {
 		return projectId;
 	}
-	public void setProjectId(long projectId) {
+	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
 	public String getProjectCode() {
@@ -162,20 +162,20 @@ public class Project {
 	public void setProjectDescription(String projectDescription) {
 		this.projectDescription = projectDescription;
 	}
-	public long getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(long startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	public long getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(long endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	public Project(long id, long projectId, String projectCode, String projectName, String projectDescription,
-			long startDate, long endDate) {
+	public Project(long id, String projectId, String projectCode, String projectName, String projectDescription,
+			String startDate, String endDate) {
 		super();
 		this.id = id;
 		this.projectId = projectId;

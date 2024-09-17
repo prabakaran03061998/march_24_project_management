@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.todolist.todolist.dto.TaskDto;
+import com.todolist.todolist.dto.TaskReportDto;
 import com.todolist.todolist.model.Task;
 import com.todolist.todolist.repository.TaskRepositoryService;
 
@@ -41,6 +42,22 @@ public class TaskServiceImpl implements TaskService {
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 			return new ArrayList<>();
+		}
+	}
+
+	@Override
+	public TaskReportDto getTaskReport() {
+		
+		try {
+			TaskReportDto taskReportDto = new TaskReportDto();
+			taskReportDto.setTotal(taskRepositoryService.findAll().size());
+			taskReportDto.setOpen(taskRepositoryService.countBystatus("OPEN"));
+			taskReportDto.setInProgress(taskRepositoryService.countBystatus("INP"));
+			taskReportDto.setComplete(taskRepositoryService.countBystatus("COMP"));
+			return taskReportDto;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
 		}
 	}
 

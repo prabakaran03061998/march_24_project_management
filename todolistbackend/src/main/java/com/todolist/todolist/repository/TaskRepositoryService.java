@@ -8,4 +8,6 @@ import com.todolist.todolist.model.Task;
 @Repository
 public interface TaskRepositoryService extends JpaRepository<Task,Long> {
 
+	long countBystatus(String string);
+
 }

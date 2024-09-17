@@ -3,12 +3,12 @@ package com.todolist.todolist.dto;
 public class ProjectDto {
 	
 	private long id;
-	private long projectId;
+	private String projectId;
 	private String projectCode;
 	private String projectName;
 	private String projectDescription;
-	private long startDate;
-	private long endDate;
+	private String startDate;
+	private String endDate;
 	
 	public long getId() {
 		return id;
@@ -16,10 +16,10 @@ public class ProjectDto {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public long getProjectId() {
+	public String getProjectId() {
 		return projectId;
 	}
-	public void setProjectId(long projectId) {
+	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
 	public String getProjectCode() {
@@ -40,20 +40,20 @@ public class ProjectDto {
 	public void setProjectDescription(String projectDescription) {
 		this.projectDescription = projectDescription;
 	}
-	public long getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(long startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	public long getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(long endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	public ProjectDto(long id, long projectId, String projectCode, String projectName, String projectDescription,
-			long startDate, long endDate) {
+	public ProjectDto(long id, String projectId, String projectCode, String projectName, String projectDescription,
+			String startDate, String endDate) {
 		super();
 		this.id = id;
 		this.projectId = projectId;
