@@ -7,7 +7,8 @@ public class ProjectDto {
 	private String projectName;
 	private String projectDescription;
 	private long startDate;
-	private String endDate;
+	private long endDate;
+	
 	public long getId() {
 		return id;
 	}
@@ -44,14 +45,14 @@ public class ProjectDto {
 	public void setStartDate(long startDate) {
 		this.startDate = startDate;
 	}
-	public String getEndDate() {
+	public long getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(String endDate) {
+	public void setEndDate(long endDate) {
 		this.endDate = endDate;
 	}
 	public ProjectDto(long id, long projectId, String projectCode, String projectName, String projectDescription,
-			long startDate, String endDate) {
+			long startDate, long endDate) {
 		super();
 		this.id = id;
 		this.projectId = projectId;

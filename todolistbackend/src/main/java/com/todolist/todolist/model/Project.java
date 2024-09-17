@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="user")
+@Table(name="project")
 public class Project {
 
 	@Id
@@ -31,7 +31,7 @@ public class Project {
 	private long startDate;
 	
 	@Column(name="endDate")
-	private String endDate;
+	private long endDate;
 	
 	
 	public long getId() {
@@ -70,10 +70,27 @@ public class Project {
 	public void setStartDate(long startDate) {
 		this.startDate = startDate;
 	}
-	public String getEndDate() {
+	public long getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(String endDate) {
+	public void setEndDate(long endDate) {
 		this.endDate = endDate;
 	}
+	public Project(long id, long projectId, String projectCode, String projectName, String projectDescription,
+			long startDate, long endDate) {
+		super();
+		this.id = id;
+		this.projectId = projectId;
+		this.projectCode = projectCode;
+		this.projectName = projectName;
+		this.projectDescription = projectDescription;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
+	public Project() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 }
