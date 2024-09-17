@@ -44,10 +44,11 @@ function Dashboard() {
 
 {/************ char desingn   *********** */ }
 
+
+        <Box sx={{display:'flex'}}  >
+
       <Box sx={{ marginTop: 2, textAlign: 'center',color:'black' }}>
-        <Typography variant="h4" gutterBottom>
-          Status Distribution
-        </Typography> 
+      
          <PieChart width={500} height={400}>
           <Pie
             data={data}
@@ -64,16 +65,11 @@ function Dashboard() {
           </Pie>
           <Tooltip />
           <Legend />
-
-
-
-        </PieChart>
-
-        
+        </PieChart>        
       </Box>
 
       {/* {/* Bar Chart  */}
-       <Box sx={{ marginTop: 8, textAlign: 'center'}}> 
+       <Box sx={{ marginTop: 8, textAlign: 'center', justifyContent:"flex-end"}}> 
          {/* <Typography variant="h4" gutterBottom color='black'>
           Status Distribution
         </Typography> */}
@@ -86,7 +82,7 @@ function Dashboard() {
           <Bar dataKey="value" fill="#2F63A0" />
         </BarChart> 
       </Box> 
-
+      </Box>
     </Container>
   );
 }

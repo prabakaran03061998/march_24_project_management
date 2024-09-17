@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
 			user.setPhoneNo(userDto.getPhoneNo());
 			user.setReport(userDto.getUserReport());
 			user.setDestignation(userDto.getDestignation());
+			user.setName(userDto.getUserName());
 			return userRepositoryService.save(user);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
