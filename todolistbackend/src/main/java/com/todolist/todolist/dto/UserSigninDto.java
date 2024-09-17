@@ -25,5 +25,11 @@ public class UserSigninDto {
 		this.email = email;
 		this.password = password;
 	}
+	public UserSigninDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 	
 }

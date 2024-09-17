@@ -1,7 +1,6 @@
 package com.todolist.todolist.dto;
 
 public class ProjectDto {
-	
 	private long id;
 	private String projectId;
 	private String projectCode;

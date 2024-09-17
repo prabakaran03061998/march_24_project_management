@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.todolist.todolist.dto.UserDto;
+import com.todolist.todolist.dto.UserSigninDto;
 import com.todolist.todolist.model.User;
 import com.todolist.todolist.repository.UserRepositoryService;
 
@@ -42,6 +43,21 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return new ArrayList<>();
+		}
+	}
+
+	@Override
+	public UserSigninDto getSignin() {
+		try {
+			UserSigninDto userSigninDto = new UserSigninDto();
+			
+//			if(userSigninDto == ) {
+//				userSigninDto.setEmail(userRepositoryService.toString());
+//			}
+			return userSigninDto;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
 		}
 	}
 
