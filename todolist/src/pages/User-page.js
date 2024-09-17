@@ -1,63 +1,61 @@
-import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Stack, CircularProgress } from '@mui/material';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Stack,
+  CircularProgress,
+} from "@mui/material";
+import axios from "axios";
+import { USER_GET } from "../api-services/API-URL";
 
-const USER_GET = 'http://localhost:8000/user/user/get/all'; 
-
-const UserCard = ({ userId }) => {
-  const [userData, setUserData] = useState(null);
+const UserCard = () => {
+  const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const getAllUsers = () => {
+    axios({
+      url: USER_GET,
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        setUserData(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`${USER_GET}/${userId}`);
-        setUserData(response.data);
-      } catch (err) {
-        // Handle 404 error specifically
-        if (err.response && err.response.status === 404) {
-          setError('User not found');
-        } else {
-          setError('An error occurred');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+    getAllUsers();
+  }, []);
 
-    fetchUserData();
-  }, [userId]);
-
-  if (loading) {
-    return <CircularProgress sx={{ display: 'block', margin: 'auto', mt: 5 }} />;
-  }
-
-  if (error) {
-    return <Typography color="error" sx={{ textAlign: 'center', mt: 5 }}>{error}</Typography>;
-  }
-
-  if (!userData) {
-    return <Typography sx={{ textAlign: 'center', mt: 5 }}>No user data found</Typography>;
-  }
-
-  return (
+  return  userData.map((user, index) => (
     <Card sx={{ maxWidth: 345, margin: 2 }}>
       <CardContent>
-        <Typography variant="h5" component="div">
-          User Information
-        </Typography>
         <Stack spacing={2} sx={{ mt: 2 }}>
-          <Typography variant="body1"><strong>User ID:</strong> {userData.userId}</Typography>
-          <Typography variant="body1"><strong>Email:</strong> {userData.emailId}</Typography>
-          <Typography variant="body1"><strong>Phone Number:</strong> {userData.phoneNo}</Typography>
+          <Typography variant="body1">
+            <strong>User ID:</strong> {user.userId}
+          </Typography>
+          <Typography variant="body1">
+            <strong>User Name:</strong> {user.name}
+          </Typography>
+          <Typography variant="body1">
+            <strong>Email:</strong> {user.emailId}
+          </Typography>
+          <Typography variant="body1">
+            <strong>Phone Number:</strong> {user.phoneNo}
+          </Typography>
           <Typography variant="body2" color="text.secondary">
-            <strong>Report:</strong> {userData.report}
+            <strong>Report:</strong> {user.report}
           </Typography>
         </Stack>
       </CardContent>
     </Card>
-  );
+  ));
 };
 
 export default UserCard;

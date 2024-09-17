@@ -21,9 +21,10 @@ import {
   Stack,
   Box,
   styled,
+  TablePagination, // Import TablePagination
 } from "@mui/material";
 import axios from "axios";
-import { TASK_SAVE,TASK_GET } from "../api-services/API-URL";
+import { TASK_SAVE, TASK_GET } from "../api-services/API-URL";
 import statusOptions from "../data/status.json";
 
 const columnStyles = {
@@ -48,6 +49,10 @@ const TaskTable = () => {
     status: "OPEN",
     startDate: "",
   });
+  
+  // Pagination state
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const StyledTableHeadCell = styled(TableCell)(({ theme }) => ({
     backgroundColor: theme.palette.info.main,
@@ -89,42 +94,54 @@ const TaskTable = () => {
     setOpen(false);
   };
 
-  const handleChange= (event) =>{
-    const {name,value}=event.target;
-    setTaskData((prevState) => ({ 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setTaskData((prevState) => ({
       ...prevState,
-      [name]:value
-   }))
-  }
+      [name]: value,
+    }));
+  };
 
   const handleSubmitTask = () => {
     console.log(taskData);
-     axios({
+    axios({
       url: TASK_SAVE,
       method: "post",
-      data:taskData,
+      data: taskData,
       headers: {
         "Content-Type": "application/json",
       },
     })
       .then((res) => {
-        getAllTasks()
+        getAllTasks();
         closepopup();
       })
       .catch((err) => console.log(err));
-
   };
+
+  // Pagination handlers
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  // Paginated data
+  const paginatedTasks = tasks.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   return (
     <div>
       <>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
-        <Stack spacing={3} direction="row">
-          <Button onClick={openpopup} variant="contained">
-            Add Task
-          </Button>
-        </Stack>  
-      </Box>   
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+          <Stack spacing={3} direction="row">
+            <Button onClick={openpopup} variant="contained">
+              Add Task
+            </Button>
+          </Stack>
+        </Box>
         <Dialog open={open} onClose={closepopup} fullWidth maxWidth="sm">
           <DialogTitle>Add To-Do Item</DialogTitle>
           <DialogContent>
@@ -150,6 +167,7 @@ const TaskTable = () => {
               sx={{ mt: 2 }}
             />
             <TextField
+            
               margin="dense"
               label="Description"
               type="text"
@@ -173,10 +191,11 @@ const TaskTable = () => {
             />
             <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
               <InputLabel>Status</InputLabel>
-              <Select label="Status"
-              name="status"
-              onChange={handleChange}
-              value={taskData.status}
+              <Select
+                label="Status"
+                name="status"
+                onChange={handleChange}
+                value={taskData.status}
               >
                 {statusOptions.map((option) => (
                   <MenuItem key={option.code} value={option.code}>
@@ -202,11 +221,7 @@ const TaskTable = () => {
             <Button onClick={closepopup} color="primary">
               Cancel
             </Button>
-            <Button
-              onClick={handleSubmitTask}
-              variant="contained"
-              color="primary"
-            >
+            <Button onClick={handleSubmitTask} variant="contained" color="primary">
               Add
             </Button>
           </DialogActions>
@@ -216,7 +231,7 @@ const TaskTable = () => {
         <Table>
           <TableHead>
             <TableRow>
-            <StyledTableHeadCell style={columnStyles.id}>S.No</StyledTableHeadCell>
+              <StyledTableHeadCell style={columnStyles.id}>S.No</StyledTableHeadCell>
               <StyledTableHeadCell style={columnStyles.name}>Task ID</StyledTableHeadCell>
               <StyledTableHeadCell style={columnStyles.name}>Name</StyledTableHeadCell>
               <StyledTableHeadCell style={columnStyles.todo}>Description</StyledTableHeadCell>
@@ -227,21 +242,15 @@ const TaskTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tasks.map((task, index) => (
+            {paginatedTasks.map((task, index) => (
               <TableRow key={task.id}>
-                <TableCell style={columnStyles.id}>{index + 1}</TableCell>
+                <TableCell style={columnStyles.id}>{index + 1 + page * rowsPerPage}</TableCell>
                 <TableCell style={columnStyles.name}>{task.taskId}</TableCell>
                 <TableCell style={columnStyles.name}>{task.name}</TableCell>
-                <TableCell style={columnStyles.todo}>
-                  {task.description}
-                </TableCell>
-                <TableCell style={columnStyles.assign}>
-                  {task.assignee}
-                </TableCell>
+                <TableCell style={columnStyles.todo}>{task.description}</TableCell>
+                <TableCell style={columnStyles.assign}>{task.assignee}</TableCell>
                 <TableCell style={columnStyles.status}>{task.status}</TableCell>
-                <TableCell style={columnStyles.startDate}>
-                  {task.startDate}
-                </TableCell>
+                <TableCell style={columnStyles.startDate}>{task.startDate}</TableCell>
                 <TableCell style={columnStyles.actions}>
                   <Button
                     variant="contained"
@@ -255,6 +264,15 @@ const TaskTable = () => {
             ))}
           </TableBody>
         </Table>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={tasks.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </TableContainer>
     </div>
   );
