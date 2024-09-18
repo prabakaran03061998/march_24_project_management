@@ -12,6 +12,6 @@ public interface UserService {
 
 	List<User> getAllUser();
 
-	public UserSigninDto getSignin();
+	public User checkUser(UserSigninDto userSigninDto);
 
 }

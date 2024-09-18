@@ -8,6 +8,8 @@ import com.todolist.todolist.model.User;
 
 @Repository
 public interface UserRepositoryService extends JpaRepository<User, Long>{
+
+	User findByemailIdAndPassword(String email, String password);
 	
 	
 	

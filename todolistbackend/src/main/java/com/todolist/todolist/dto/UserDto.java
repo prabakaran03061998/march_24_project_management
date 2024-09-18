@@ -9,10 +9,16 @@ public class UserDto {
 	private long phoneNo;
 	private String userReport;
 	private String destignation;
-	
-	
-	
-	
+	private String password;
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public int getId() {
 		return id;
 	}

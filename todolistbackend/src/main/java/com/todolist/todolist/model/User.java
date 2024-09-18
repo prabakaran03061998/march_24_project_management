@@ -32,6 +32,19 @@ public class User {
 	
 	@Column(name="destignation")
 	private String destignation;
+	
+	@Column(name="password")
+	private String password;
+	
+	
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public long getId() {
 		return id;
@@ -89,12 +102,13 @@ public class User {
 		this.destignation = destignation;
 	}
 
-	public User(long id, String userId, String name, String emailId, long phoneNo, String report, String destignation) {
+	public User(long id, String userId, String name, String emailId, String password, long phoneNo, String report, String destignation) {
 		super();
 		this.id = id;
 		this.userId = userId;
 		this.name = name;
 		this.emailId = emailId;
+		this.password = password;
 		this.phoneNo = phoneNo;
 		this.report = report;
 		this.destignation = destignation;

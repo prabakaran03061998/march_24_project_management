@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService {
 			user.setReport(userDto.getUserReport());
 			user.setDestignation(userDto.getDestignation());
 			user.setName(userDto.getUserName());
+			user.setPassword(userDto.getPassword());
 			return userRepositoryService.save(user);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -47,14 +48,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserSigninDto getSignin() {
+	public User checkUser(UserSigninDto userSigninDto) {
 		try {
-			UserSigninDto userSigninDto = new UserSigninDto();
-			
-//			if(userSigninDto == ) {
-//				userSigninDto.setEmail(userRepositoryService.toString());
-//			}
-			return userSigninDto;
+			return userRepositoryService.findByemailIdAndPassword (userSigninDto.getEmail(),
+					userSigninDto.getPassword());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;
