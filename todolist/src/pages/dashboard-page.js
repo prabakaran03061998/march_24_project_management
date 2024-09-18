@@ -1,18 +1,31 @@
 import React from 'react';
-import { Container, Grid, Paper, Typography, Box } from '@mui/material';
+import { Container, Grid, Paper, Typography, Box,} from '@mui/material';
+
 import { PieChart, Pie, Cell, Tooltip, Legend, BarChart, XAxis, YAxis, Bar, CartesianGrid } from 'recharts';
 
 
 ///// set an arry for paper
 const data = [
-  { name: 'Processing', value: 400 },
-  { name: 'Pending', value: 300 },
-  { name: 'Completed', value: 300 },
+  { name: 'Total', value: 400 },
+  { name: 'Inprogress', value: 300 },
+  { name: 'pending', value: 300 },
+  { name: 'completed', value: 300 },
 ];
+
 ///////
 
 ///////// passing colors for chart //////
-const COLORS = ['#4E91DD', '#E34A46', '#32C3A4'];
+
+const COLORS = ['navy', '#4E91DD', '#E34A46', '#32C3A4'];
+// const newColorFind = () => {
+//   for (let x = 0; x < 6; x++) {
+//     let index = Math.floor(Math.random() * 16);
+//     let value = arrayOfColorFunctions[index];
+
+//     randomColorString += value;
+//   }
+//   console.log(randomColorString);
+// };
 
 function Dashboard() {
   return (
@@ -21,24 +34,37 @@ function Dashboard() {
         Status Dashboard
       </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
-          <Paper elevation={3} sx={{ padding: 2, textAlign: 'center',color:'#E34A46',  boxShadow: 5,borderColor: 'blue'  }}>
-            <Typography variant="h6">Processing</Typography>
+        <Grid item  xs={12} md={3}>
+          <Paper elevation={3} sx={{ padding: 2, textAlign: 'center',color:'blue',  boxShadow: 5,borderColor: 'blue'  }}>
+
+          
+
+
+            <Typography variant="h6">Total</Typography>
             <Typography variant="h4">400</Typography>
           </Paper>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <Paper elevation={3} sx={{ padding: 2, textAlign: 'center',color:'#4E91DD', boxShadow: 5 }}>
+        <Grid item xs={12} md={3}>
+          <Paper elevation={3} sx={{ padding: 2, textAlign: 'center',color:'red', boxShadow: 5 }}>
+            
+            <Typography variant="h6">Inprogess</Typography>
+            <Typography variant="h4">300</Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <Paper elevation={3} sx={{ padding: 2, textAlign: 'center',color:'green', boxShadow: 5 }}>
             <Typography variant="h6">Pending</Typography>
             <Typography variant="h4">300</Typography>
           </Paper>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <Paper elevation={3} sx={{ padding: 2, textAlign: 'center',color:'#32C3A4', boxShadow: 5 }}>
+
+        <Grid item xs={12} md={3}>
+          <Paper elevation={3} sx={{ padding: 2, textAlign: 'center',color:'orange', boxShadow: 5 }}>
             <Typography variant="h6">Completed</Typography>
             <Typography variant="h4">300</Typography>
           </Paper>
         </Grid>
+
       </Grid>
       
 
@@ -47,7 +73,7 @@ function Dashboard() {
 
         <Box sx={{display:'flex'}}  >
 
-      <Box sx={{ marginTop: 2, textAlign: 'center',color:'black' }}>
+      <Box sx={{ marginTop: 2, textAlign: 'center',color:'black'}}>
       
          <PieChart width={500} height={400}>
           <Pie
