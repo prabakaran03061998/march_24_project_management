@@ -122,9 +122,7 @@ const TaskTable = () => {
       url: TASK_SAVE,
       method: "post",
       data: taskData,
-      headers: {
-        "Content-Type": "application/json",
-      },
+
     })
       .then((res) => {
         getAllTasks();
@@ -135,12 +133,9 @@ const TaskTable = () => {
 
   const handleUpdateTask = () => {
     axios({
-      url: `${TASK_SAVE}/${editingTaskId}`,
-      method: "put",
+      url: TASK_SAVE ,
+      method: "post",
       data: taskData,
-      headers: {
-        "Content-Type": "application/json",
-      },
     })
       .then((res) => {
         getAllTasks();
@@ -180,7 +175,7 @@ const TaskTable = () => {
             label="Task ID"
             name="taskId"
             type="text"
-            value={taskData.taskId}
+            // value={taskData.taskId}
             onChange={handleChange}
             fullWidth
             variant="outlined"
@@ -190,7 +185,7 @@ const TaskTable = () => {
             label="Name"
             type="text"
             name="name"
-            value={taskData.name}
+            // value={taskData.name}
             onChange={handleChange}
             fullWidth
             variant="outlined"
@@ -203,7 +198,7 @@ const TaskTable = () => {
             onChange={handleChange}
             name="description"
             fullWidth
-            value={taskData.description}
+            // value={taskData.description}
             variant="outlined"
             sx={{ mt: 2 }}
           />
@@ -213,7 +208,7 @@ const TaskTable = () => {
             onChange={handleChange}
             name="assignee"
             type="text"
-            value={taskData.assignee}
+            // value={taskData.assignee}
             fullWidth
             variant="outlined"
             sx={{ mt: 2 }}
@@ -224,7 +219,7 @@ const TaskTable = () => {
               label="Status"
               name="status"
               onChange={handleChange}
-              value={taskData.status}
+              value="OPEN"
             >
               {statusOptions.map((option) => (
                 <MenuItem key={option.code} value={option.code}>
@@ -239,7 +234,7 @@ const TaskTable = () => {
             type="date"
             name="startDate"
             onChange={handleChange}
-            value={taskData.startDate}
+            // value={taskData.startDate}
             fullWidth
             variant="outlined"
             InputLabelProps={{ shrink: true }}

@@ -1,0 +1,10 @@
+[
+    {
+    "id": 1,
+    "userId": "user123",
+    "emailId": "user@example.com",
+    "phoneNo": "123-456-7890",
+    "report": "This is a report.",
+    "destignation": "Manager"
+  }
+]
