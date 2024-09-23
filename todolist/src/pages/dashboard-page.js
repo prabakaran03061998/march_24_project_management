@@ -91,7 +91,24 @@ function Dashboard() {
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 5  }}>
         <Box sx={{ textAlign: 'center', flex: 1, marginRight: 0, boxShadow: 5, borderRadius: 3, bgcolor: '#f9f9f9', p: 1,height:'380px', }}>
-          <Typography variant="h5" sx={{ marginBottom: 2 }}>Project Process</Typography>
+        <Typography
+        variant="h5"
+        gutterBottom
+        align="center"
+        color="primary"
+        fontFamily="inherit"
+        sx={{
+          
+          
+          letterSpacing: 0.5,
+          background: 'linear-gradient(70deg, gold 10%, red 90%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          padding: '10px 0',
+        }}
+      >
+        Project Process
+      </Typography>
           <PieChart width={400} height={300}>
             <Pie data={data} cx="50%" cy="50%" labelLine={false} outerRadius={110} fill="#8884d8" dataKey="value">
               {data.map((entry, index) => (
@@ -104,7 +121,24 @@ function Dashboard() {
         </Box>
 
         <Box sx={{ textAlign: 'center', flex: 1, marginLeft: 2, boxShadow: 5, borderRadius: 3, bgcolor: '#f9f9f9', p: 2 }}>
-          <Typography variant="h5" sx={{ marginBottom: 2 }}> Project Status </Typography>
+        <Typography
+        variant="h5"
+        gutterBottom
+        align="center"
+        color="primary"
+        fontFamily="inherit"
+        sx={{
+          
+          
+          letterSpacing: 0.5,
+          background: 'linear-gradient(70deg, red  10%, brown 90%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          padding: '10px 0',
+        }}
+      >
+        Project Status
+      </Typography>
           <BarChart width={400} height={300} data={data}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
