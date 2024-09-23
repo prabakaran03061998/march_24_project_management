@@ -62,6 +62,7 @@ const TaskTable = () => {
   });
 
   const [editingTaskId, setEditingTaskId] = useState(null); // Track which task is being edited
+  // console.log(editingTaskId);
 
   // Pagination state
   const [page, setPage] = useState(0);
@@ -80,7 +81,7 @@ const TaskTable = () => {
       })
       .catch((err) => console.log(err));
   };
-
+  console.log(editingTaskId);
   useEffect(() => {
     getAllTasks();
   }, []);
