@@ -62,7 +62,7 @@ const TaskTable = () => {
   });
 
   const [editingTaskId, setEditingTaskId] = useState(null); // Track which task is being edited
-  // console.log(editingTaskId);
+  console.log(editingTaskId);
 
   // Pagination state
   const [page, setPage] = useState(0);
