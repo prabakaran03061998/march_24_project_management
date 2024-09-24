@@ -64,7 +64,7 @@ const UserCard = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, p: 2 }}>
+    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, p: 2, backgroundColor: '#f5f5f5', minHeight: '100vh' }}>
       {userData.map((user) => (
         <Card
           key={user.userId}
@@ -73,8 +73,11 @@ const UserCard = () => {
             minWidth: 350,
             margin: 1,
             transition: '0.3s',
+            borderRadius: '16px',
+            boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
+            backgroundColor: '#ffffff',
             '&:hover': {
-              boxShadow: 10,
+              boxShadow: '0px 8px 30px rgba(0, 0, 0, 0.2)',
             },
           }}
         >
@@ -93,28 +96,28 @@ const UserCard = () => {
                 <strong>User ID:</strong> {user.userId}
               </Typography>
               <Typography variant="body1">
-              <strong>User Name:</strong> {user.name}
+                <strong>User Name:</strong> {user.name}
               </Typography>
               <Typography variant="body1">
                 <strong>Email:</strong> {user.emailId}
               </Typography>
 
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                <IconButton onClick={() => handleExpandClick(user.userId)} >
+                <IconButton onClick={() => handleExpandClick(user.userId)}>
                   {expandedUser === user.userId ? <ExpandLess /> : <ExpandMore />}
                 </IconButton>
               </Box>
               <Collapse in={expandedUser === user.userId}>
                 <Box sx={{ mt: 2 }}>
-                <Typography variant="body1">
-                <strong>Phone Number:</strong> {user.phoneNo}
-                </Typography>
+                  <Typography variant="body1">
+                    <strong>Phone Number:</strong> {user.phoneNo}
+                  </Typography>
                   <Typography variant="body2" color="text.secondary">
                     <strong>Report:</strong> {user.report}
                   </Typography>
                   <Typography variant="body1">
-                <strong>Destignation:</strong> {user.destignation}
-                </Typography>
+                    <strong>Designation:</strong> {user.destignation}
+                  </Typography>
                 </Box>
               </Collapse>
             </Stack>
