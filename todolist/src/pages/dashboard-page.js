@@ -33,6 +33,7 @@ function Dashboard() {
 
   const formatChartData = (data) => {
     // Assuming your API response has the structure:
+    
     const formattedData = [
       { name: 'Total', value: data.total },
       { name: 'In Progress', value: data.inProgress },
