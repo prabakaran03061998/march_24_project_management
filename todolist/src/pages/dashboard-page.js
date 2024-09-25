@@ -48,7 +48,7 @@ function Dashboard() {
   }, );
 
   return (
-    <Container>
+    <Container sx={{ backgroundColor: '#f5f5f5', minHeight: '100vh' }}>
       <Typography
         variant="h4"
         gutterBottom
