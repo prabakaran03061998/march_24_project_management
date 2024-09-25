@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todolist.todolist.dto.UserSigninDto;
 import com.todolist.todolist.model.User;
 import com.todolist.todolist.service.UserService;
+import com.todolist.todolist.util.ConstUtil;
 import com.todolist.todolist.util.FrameResponse;
 
 @RestController
@@ -27,9 +28,8 @@ public class UserSigninController {
 	public ResponseEntity<Map<String, Object>> checkSignin(@RequestBody UserSigninDto userSigninDto) {
 		User user = userService.checkUser(userSigninDto);
 		return user != null
-				? new ResponseEntity<Map<String, Object>>(FrameResponse.create("success", HttpStatus.OK), HttpStatus.OK)
-				: new ResponseEntity<Map<String, Object>>(FrameResponse.create("failed", HttpStatus.BAD_REQUEST),
-						HttpStatus.OK);
+				? new ResponseEntity<>(FrameResponse.create(ConstUtil.SUCCESS, HttpStatus.OK, ConstUtil.USERS), HttpStatus.OK)
+						:new ResponseEntity<>(FrameResponse.create(ConstUtil.FAILED, HttpStatus.BAD_REQUEST, ConstUtil.FAILED), HttpStatus.OK);
 
 	}
 }

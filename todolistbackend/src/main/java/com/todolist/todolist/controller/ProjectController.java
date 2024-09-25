@@ -29,8 +29,8 @@ public class ProjectController {
 	public ResponseEntity<Map<String,Object>>saveUser(@RequestBody ProjectDto projectDto){
 		Project project = projectService.saveProject(projectDto);
 		return project !=null
-				? new ResponseEntity<>(FrameResponse.create(ConstUtil.SUCCESS, HttpStatus.OK), HttpStatus.OK)
-						:new ResponseEntity<>(FrameResponse.create(ConstUtil.FAILED, HttpStatus.BAD_REQUEST), HttpStatus.OK);
+				? new ResponseEntity<>(FrameResponse.create(ConstUtil.SUCCESS, HttpStatus.OK, ConstUtil.USERS), HttpStatus.OK)
+						:new ResponseEntity<>(FrameResponse.create(ConstUtil.FAILED, HttpStatus.BAD_REQUEST, ConstUtil.FAILED), HttpStatus.OK);
 	}
 	
 	@GetMapping("/project/get/all")
