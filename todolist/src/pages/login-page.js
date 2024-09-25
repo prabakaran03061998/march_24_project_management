@@ -66,7 +66,7 @@ export default function SignIn() {
   
       if (response.data.status === 'OK') { // Ensure this matches your API response
         localStorage.setItem('user', JSON.stringify(response.data.user));
-        navigate('/home');
+        navigate('/');
       } else {
         alert('Login failed: ' + response.data.message); // Alert the error message
       }
