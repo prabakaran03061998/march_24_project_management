@@ -29,7 +29,13 @@ public class TaskServiceImpl implements TaskService {
 			task.setStartDate(taskDto.getStartDate());
 			task.setStatus(taskDto.getStatus());
 			task.setTaskId(taskDto.getTaskId());
+			task.setEstimation(taskDto.getEstimation());
+			task.setSpend(taskDto.getSpend());
+			task.setDueDate(taskDto.getDueDate());
+			task.setPriority(taskDto.getPriority());
+			
 			return taskRepositoryService.save(task);
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;
