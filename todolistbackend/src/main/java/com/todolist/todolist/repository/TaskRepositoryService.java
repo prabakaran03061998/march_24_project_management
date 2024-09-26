@@ -10,4 +10,8 @@ public interface TaskRepositoryService extends JpaRepository<Task,Long> {
 
 	long countBystatus(String string);
 
+	long findBystatus(String string);
+	
+	String status(String string);
+	
 }

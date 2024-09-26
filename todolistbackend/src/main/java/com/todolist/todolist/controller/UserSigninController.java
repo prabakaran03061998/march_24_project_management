@@ -28,8 +28,9 @@ public class UserSigninController {
 	public ResponseEntity<Map<String, Object>> checkSignin(@RequestBody UserSigninDto userSigninDto) {
 		User user = userService.checkUser(userSigninDto);
 		return user != null
-				? new ResponseEntity<>(FrameResponse.create(ConstUtil.SUCCESS, HttpStatus.OK, ConstUtil.USERS), HttpStatus.OK)
-						:new ResponseEntity<>(FrameResponse.create(ConstUtil.FAILED, HttpStatus.BAD_REQUEST, ConstUtil.FAILED), HttpStatus.OK);
+				? new ResponseEntity<>(FrameResponse.create(ConstUtil.SUCCESS, HttpStatus.OK, user), HttpStatus.OK)
+				: new ResponseEntity<>(FrameResponse.create(ConstUtil.FAILED, HttpStatus.BAD_REQUEST),
+						HttpStatus.OK);
 
 	}
 }

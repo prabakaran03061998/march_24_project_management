@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.todolist.todolist.dto.TaskDto;
 import com.todolist.todolist.dto.TaskReportDto;
+import com.todolist.todolist.dto.TaskStatusDto;
 import com.todolist.todolist.model.Task;
 import com.todolist.todolist.repository.TaskRepositoryService;
 
@@ -55,6 +56,21 @@ public class TaskServiceImpl implements TaskService {
 			taskReportDto.setInProgress(taskRepositoryService.countBystatus("INP"));
 			taskReportDto.setComplete(taskRepositoryService.countBystatus("COMP"));
 			return taskReportDto;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public TaskStatusDto getTaskStatus() {
+		try {
+			TaskStatusDto taskStatusDto = new TaskStatusDto();
+			taskStatusDto.setOpen(taskRepositoryService.status("OPEN"));
+			taskStatusDto.setInProgress(taskRepositoryService.status("INP"));
+			taskStatusDto.setComplete(taskRepositoryService.status("COMP"));
+			
+			return taskStatusDto;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;

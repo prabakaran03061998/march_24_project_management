@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.todolist.todolist.dto.TaskDto;
 import com.todolist.todolist.dto.TaskReportDto;
+import com.todolist.todolist.dto.TaskStatusDto;
 import com.todolist.todolist.model.Task;
 
 public interface TaskService {
@@ -13,5 +14,7 @@ public interface TaskService {
 	List<Task> getAllTask();
 
 	TaskReportDto getTaskReport();
+
+	TaskStatusDto getTaskStatus();
 
 }

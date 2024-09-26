@@ -30,8 +30,8 @@ public class UserController {
 	public ResponseEntity<Map<String,Object>>saveUser(@RequestBody UserDto userDto){
 		User user = userService.saveUser(userDto);
 		return user !=null
-				? new ResponseEntity<>(FrameResponse.create(ConstUtil.SUCCESS, HttpStatus.OK, ConstUtil.USERS), HttpStatus.OK)
-						:new ResponseEntity<>(FrameResponse.create(ConstUtil.FAILED, HttpStatus.BAD_REQUEST, ConstUtil.FAILED), HttpStatus.OK);
+				? new ResponseEntity<>(FrameResponse.create(ConstUtil.SUCCESS, HttpStatus.OK), HttpStatus.OK)
+						:new ResponseEntity<>(FrameResponse.create(ConstUtil.FAILED, HttpStatus.BAD_REQUEST), HttpStatus.OK);
 	}
 	
 	@GetMapping("/user/get/all")
