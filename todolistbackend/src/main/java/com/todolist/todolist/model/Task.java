@@ -32,9 +32,24 @@ public class Task {
 	
 	@Column(name="start_date")
 	private String startDate;
+	
+	@Column(name="estimation")
+	private String estimation;
+	
+	@Column(name="spend")
+	private String spend;
+	
+	@Column(name="dueDate")
+	private String dueDate;
+	
+	@Column(name="priority")
+	private String priority;
+	
+	
+	
 
 	public Task(long id, String taskId, String name, String description, String assignee, String status,
-			String startDate) {
+			String startDate,String estimation, String spend, String dueDate, String priority) {
 		super();
 		this.id = id;
 		this.taskId = taskId;
@@ -43,6 +58,10 @@ public class Task {
 		this.assignee = assignee;
 		this.status = status;
 		this.startDate = startDate;
+		this.estimation = estimation;
+		this.spend = spend;
+		this.dueDate = dueDate;
+		this.priority = priority;
 	}
 
 	public Task() {
@@ -105,6 +124,39 @@ public class Task {
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
+
+	public String getEstimation() {
+		return estimation;
+	}
+
+	public void setEstimation(String estimation) {
+		this.estimation = estimation;
+	}
+
+	public String getSpend() {
+		return spend;
+	}
+
+	public void setSpend(String spend) {
+		this.spend = spend;
+	}
+
+	public String getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+	
 	
 	
 }

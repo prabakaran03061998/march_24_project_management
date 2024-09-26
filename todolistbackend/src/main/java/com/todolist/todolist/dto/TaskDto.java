@@ -9,6 +9,11 @@ public class TaskDto {
 	private String assignee;
 	private String status;
 	private String startDate;
+	private String estimation;
+	private String spend;
+	private String dueDate;
+	private String priority;
+	
 	public long getId() {
 		return id;
 	}
@@ -50,13 +55,41 @@ public class TaskDto {
 	}
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
+		
+	}
+	public String getEstimation() {
+		return estimation;
+	}
+	public void setEstimation(String estimation) {
+		this.estimation = estimation;
+	}
+	public String getSpend() {
+		return spend;
+	}
+	public void setSpend(String spend) {
+		this.spend = spend;
+	}
+	public String getDueDate() {
+		return dueDate;
+	}
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
+	}
+	public String getPriority() {
+		return priority;
+	}
+	public void setPriority(String priority) {
+		this.priority = priority;
 	}
 	public TaskDto() {
 		super();
 		// TODO Auto-generated constructor stub
+		
 	}
+	
+	
 	public TaskDto(long id, String taskId, String name, String description, String assignee, String status,
-			String startDate) {
+			String startDate,String estimation, String spend, String dueDate, String priority) {
 		super();
 		this.id = id;
 		this.taskId = taskId;
@@ -65,6 +98,10 @@ public class TaskDto {
 		this.assignee = assignee;
 		this.status = status;
 		this.startDate = startDate;
+		this.estimation = estimation;
+		this.spend = spend;
+		this.dueDate = dueDate;
+		this.priority = priority;
 	}
 	
 	
