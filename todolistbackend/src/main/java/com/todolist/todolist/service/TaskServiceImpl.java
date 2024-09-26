@@ -69,14 +69,9 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public TaskStatusDto getTaskStatus() {
+	public List<Task> getTaskStatus(String status) {
 		try {
-			TaskStatusDto taskStatusDto = new TaskStatusDto();
-			taskStatusDto.setOpen(taskRepositoryService.status("OPEN"));
-			taskStatusDto.setInProgress(taskRepositoryService.status("INP"));
-			taskStatusDto.setComplete(taskRepositoryService.status("COMP"));
-			
-			return taskStatusDto;
+			 return taskRepositoryService.findBystatus(status);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;

@@ -2,10 +2,19 @@ package com.todolist.todolist.dto;
 
 public class TaskStatusDto {
 
+	private long total;
 	private String open;
 	private String inProgress;
 	private String complete;
 	
+	
+	
+	public long getTotal() {
+		return total;
+	}
+	public void setTotal(long total) {
+		this.total = total;
+	}
 	public String getOpen() {
 		return open;
 	}
@@ -25,8 +34,9 @@ public class TaskStatusDto {
 		this.complete = complete;
 	}
 	
-	public TaskStatusDto(String open, String inProgress, String complete) {
+	public TaskStatusDto(long total, String open, String inProgress, String complete) {
 		super();
+		this.total = total;
 		this.open = open;
 		this.inProgress = inProgress;
 		this.complete = complete;

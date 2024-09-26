@@ -15,6 +15,6 @@ public interface TaskService {
 
 	TaskReportDto getTaskReport();
 
-	TaskStatusDto getTaskStatus();
+	List<Task> getTaskStatus(String status);
 
 }
