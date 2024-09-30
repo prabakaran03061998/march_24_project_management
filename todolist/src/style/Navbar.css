@@ -2,34 +2,15 @@
   display: flex;
   align-items: center;
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   background-color:white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border-bottom: 1px solid #ddd;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
+  border-bottom: 2px solid #ddddddcb;
 }
 
 .search-container {
   flex-grow: 1;
 }
 
-.search-input-container {
-  width: 40%;
-  position: relative;
-  display: flex;
-  align-items: center;
-}
 
-.search-bar {
-  width: 100%;
-  padding: 10px;
-  padding-right: 40px; 
-  box-sizing: border-box;
-  border: 1px solid #414141;
-  border-radius: 4px;
-}
 
-.search-icon {
-  position: absolute;
-  right: 10px;
-  pointer-events: none;
-}

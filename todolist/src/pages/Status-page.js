@@ -18,9 +18,12 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Fade,
+  IconButton,
 } from "@mui/material";
-import axios from "axios"; // Import axios for making HTTP requests
-import { Task_OPEN, Task_INP, Task_COMP } from "../api-services/API-URL"; // Adjust the import path as needed
+import CloseIcon from '@mui/icons-material/Close';
+import axios from "axios";
+import { Task_OPEN, Task_INP, Task_COMP } from "../api-services/API-URL";
 
 const TaskStatusPage = () => {
   const [tasks, setTasks] = useState([]);
@@ -36,13 +39,11 @@ const TaskStatusPage = () => {
           axios.get(Task_INP),
           axios.get(Task_COMP),
         ]);
-
         setTasks([...openTasks.data, ...inProgressTasks.data, ...completeTasks.data]);
       } catch (error) {
         console.error("Error fetching tasks:", error);
       }
     };
-
     fetchTasks();
   }, []);
 
@@ -80,15 +81,15 @@ const TaskStatusPage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow hover style={{ cursor: 'pointer', '&:hover': { backgroundColor: '#f5f5f5' } }}>
+              <TableRow hover>
                 <TableCell style={{ color: '#c9184a', fontWeight: 'bold' }}>Open</TableCell>
                 <TableCell align="center">{filterTasksByStatus("open").length}</TableCell>
               </TableRow>
-              <TableRow hover style={{ cursor: 'pointer', '&:hover': { backgroundColor: '#f5f5f5' } }}>
+              <TableRow hover>
                 <TableCell style={{ color: '#ffd000', fontWeight: 'bold' }}>In Progress</TableCell>
                 <TableCell align="center">{filterTasksByStatus("inp").length}</TableCell>
               </TableRow>
-              <TableRow hover style={{ cursor: 'pointer', '&:hover': { backgroundColor: '#f5f5f5' } }}>
+              <TableRow hover>
                 <TableCell style={{ color: '#09bc8a', fontWeight: 'bold' }}>Complete</TableCell>
                 <TableCell align="center">{filterTasksByStatus("comp").length}</TableCell>
               </TableRow>
@@ -102,7 +103,6 @@ const TaskStatusPage = () => {
       );
     }
 
-    // Render tasks for Open, In Progress, and Complete
     return (
       <Grid container spacing={2}>
         {filteredTasks.length > 0 ? (
@@ -130,7 +130,6 @@ const TaskStatusPage = () => {
     );
   };
 
-
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
       case "open":
@@ -144,36 +143,44 @@ const TaskStatusPage = () => {
     }
   };
 
+  const buttonStyles = (page) => ({
+    marginRight: "10px",
+    background: currentPage === page ? '#1e90ff' : 'white',
+    color: currentPage === page ? 'white' : 'black',
+    border: currentPage === page ? 'none' : '1px solid #1e90ff',
+    transition: 'background 0.3s, color 0.3s',
+  });
+
   return (
     <Box style={{ padding: "20px" }}>
       <Typography variant="h4" gutterBottom>Task Status Page</Typography>
 
       <Box style={{ marginBottom: "20px" }}>
         <Button
-          variant={currentPage === "Total" ? "contained" : "outlined"}
+          variant="outlined"
           onClick={() => setCurrentPage("Total")}
-          style={{ marginRight: "10px", background: 'navy', color: 'white' }}
+          style={buttonStyles("Total")}
         >
           Total
         </Button>
         <Button
-          variant={currentPage === "Open" ? "contained" : "outlined"}
+          variant="outlined"
           onClick={() => setCurrentPage("Open")}
-          style={{ marginRight: "10px", background: '#c9184a', color: 'black' }}
+          style={buttonStyles("Open")}
         >
           Open
         </Button>
         <Button
-          variant={currentPage === "In Progress" ? "contained" : "outlined"}
+          variant="outlined"
           onClick={() => setCurrentPage("In Progress")}
-          style={{ marginRight: "10px", background: '#ffd000', color: 'black' }}
+          style={buttonStyles("In Progress")}
         >
           In Progress
         </Button>
         <Button
-          variant={currentPage === "Complete" ? "contained" : "outlined"}
+          variant="outlined"
           onClick={() => setCurrentPage("Complete")}
-          style={{ marginRight: "10px", background: '#09bc8a', color: 'black' }}
+          style={buttonStyles("Complete")}
         >
           Complete
         </Button>
@@ -181,27 +188,46 @@ const TaskStatusPage = () => {
 
       {renderTasksByStatus()}
 
-      {/* Modal for Task Details */}
+      {/* Modal for Task Details with Fade Animation */}
       <Dialog open={openModal} onClose={handleCloseModal} maxWidth="sm" fullWidth>
-        <DialogTitle>Task Details</DialogTitle>
-        <DialogContent>
-          {selectedTask && (
-            <Box>
-              <Typography variant="h6">{selectedTask.name}</Typography>
-              <Typography variant="body1">Description: {selectedTask.description}</Typography>
-              <Typography variant="body1">Assignee: {selectedTask.assignee}</Typography>
-              <Typography variant="body1">Status: {selectedTask.status}</Typography>
-              <Typography variant="body1">Start Date: {new Date(selectedTask.startDate).toLocaleDateString()}</Typography>
-              <Typography variant="body1">Estimation: {selectedTask.estimation}</Typography>
-              <Typography variant="body1">Spend: {selectedTask.spend}</Typography>
-              <Typography variant="body1">Due Date: {new Date(selectedTask.dueDate).toLocaleDateString()}</Typography>
-              <Typography variant="body1">Priority: {selectedTask.priority}</Typography>
-            </Box>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal} color="primary">Close</Button>
-        </DialogActions>
+        <Fade in={openModal}>
+          <Box style={{
+            backgroundColor: '#fff',
+            borderRadius: '12px',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+          }}>
+            <DialogTitle>
+              Task Details
+              <IconButton
+                edge="end"
+                color="inherit"
+                onClick={handleCloseModal}
+                aria-label="close"
+                style={{ position: 'absolute', right: 8, top: 8 }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </DialogTitle>
+            <DialogContent>
+              {selectedTask && (
+                <Box>
+                  <Typography variant="h6" gutterBottom>{selectedTask.name}</Typography>
+                  <Typography variant="body1"><strong>Description:</strong> {selectedTask.description}</Typography>
+                  <Typography variant="body1"><strong>Assignee:</strong> {selectedTask.assignee}</Typography>
+                  <Typography variant="body1"><strong>Status:</strong> {selectedTask.status}</Typography>
+                  <Typography variant="body1"><strong>Start Date:</strong> {new Date(selectedTask.startDate).toLocaleDateString()}</Typography>
+                  <Typography variant="body1"><strong>Estimation:</strong> {selectedTask.estimation}</Typography>
+                  <Typography variant="body1"><strong>Spend:</strong> {selectedTask.spend}</Typography>
+                  <Typography variant="body1"><strong>Due Date:</strong> {new Date(selectedTask.dueDate).toLocaleDateString()}</Typography>
+                  <Typography variant="body1"><strong>Priority:</strong> {selectedTask.priority}</Typography>
+                </Box>
+              )}
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseModal} color="primary">Close</Button>
+            </DialogActions>
+          </Box>
+        </Fade>
       </Dialog>
     </Box>
   );

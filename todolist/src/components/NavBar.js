@@ -2,18 +2,12 @@ import React, { useState } from 'react';
 import '../style/Navbar.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
 
 const Navbar = () => {
-  const [searchTerm, setSearchTerm] = useState('');
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
   const location = useLocation(); 
   const navigate = useNavigate(); // Initialize navigate
-
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
 
   const handleLogoutClick = () => {
     setOpenLogoutDialog(true);
@@ -36,25 +30,21 @@ const Navbar = () => {
   console.log(isTaskPage);
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" >
       <div className="search-container">
-        <div className="search-input-container">
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={handleSearchChange}
-            className="search-bar"
-          />
-          <SearchOutlinedIcon className="search-icon" color='action'/>
-        </div>
+      <Typography variant="h6" sx={{ flexGrow: 1 }}>
+        
+        </Typography>
+
       </div>
       <div className="button-container">
-        <LogoutOutlinedIcon 
-          color='action' 
-          onClick={handleLogoutClick} 
-          style={{ cursor: 'pointer' }} 
-        />
+      <Button
+          color="inherit"
+          startIcon={<LogoutOutlinedIcon />}
+          onClick={handleLogoutClick}
+        >
+          Logout
+        </Button>
       </div>
 
       {/* Logout Dialog */}

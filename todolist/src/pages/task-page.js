@@ -24,6 +24,7 @@ import {
   TablePagination,
   Chip,
   Grid,
+  Slide,
 } from "@mui/material";
 import axios from "axios";
 import { TASK_SAVE, TASK_GET } from "../api-services/API-URL";
@@ -53,6 +54,10 @@ const StyledTableHeadCell = styled(TableCell)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
 }));
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const TaskTable = () => {
   const [tasks, setTasks] = useState([]);
   const [openAdd, setOpenAdd] = useState(false);
@@ -70,10 +75,11 @@ const TaskTable = () => {
     spend: "",
     priority: "",
   });
-
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [searchTerm, setSearchTerm] = useState("");
+
   console.log(editingTaskId);
   
 
@@ -135,11 +141,41 @@ const TaskTable = () => {
     setPage(0);
   };
 
-  const paginatedTasks = tasks.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value); // Update search term state
+  };
+
+  const filteredTasks = tasks.filter(task => {
+    return (
+      task.taskId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task.assignee.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+
+  const paginatedTasks = filteredTasks.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
+  const highlightText = (text) => {
+    if (!searchTerm) return text;
+
+    const parts = text.split(new RegExp(`(${searchTerm})`, 'gi'));
+    return parts.map((part, index) => 
+      part.toLowerCase() === searchTerm.toLowerCase() ? 
+      <span key={index} style={{ backgroundColor: '#c480ff' }}>{part}</span> : part
+    );
+  };
 
   return (
     <div>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+        <TextField
+          label="Search Tasks"
+          variant="outlined"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          sx={{ mr: 2 }}
+        />
         <Stack spacing={3} direction="row">
           <Button onClick={openAddPopup} variant="contained">
             Add Task
@@ -147,250 +183,249 @@ const TaskTable = () => {
         </Stack>
       </Box>
 
-{/* Add Task Dialog */}
-<Dialog open={openAdd} onClose={closeAddPopup} fullWidth maxWidth="sm">
-  <DialogTitle>Add To-Do Item</DialogTitle>
-  <DialogContent>
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Task ID"
-          name="taskId"
-          onChange={handleChange}
-          variant="outlined"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Name"
-          name="name"
-          onChange={handleChange}
-          variant="outlined"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Description"
-          name="description"
-          onChange={handleChange}
-          variant="outlined"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Assignee"
-          name="assignee"
-          onChange={handleChange}
-          variant="outlined"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel>Status</InputLabel>
-          <Select
-            label="Status"
-            name="status"
-            onChange={handleChange}
-            value={taskData.status}
-          >
-            {statusOptions.map((option) => (
-              <MenuItem key={option.code} value={option.code}>{option.status}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Start Date"
-          type="date"
-          name="startDate"
-          onChange={handleChange}
-          InputLabelProps={{ shrink: true }}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Due Date"
-          type="date"
-          name="dueDate"
-          onChange={handleChange}
-          InputLabelProps={{ shrink: true }}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Estimation (hours)"
-          name="estimation"
-          onChange={handleChange}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Spend"
-          name="spend"
-          onChange={handleChange}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Priority"
-          name="priority"
-          onChange={handleChange}
-        />
-      </Grid>
-    </Grid>
-  </DialogContent>
-  <DialogActions>
-    <Button onClick={closeAddPopup} color="primary">Cancel</Button>
-    <Button onClick={handleSubmitTask} variant="contained" color="primary">Add</Button>
-  </DialogActions>
-</Dialog>
+      {/* Add Task Dialog */}
+      <Dialog open={openAdd} onClose={closeAddPopup} TransitionComponent={Transition} fullWidth maxWidth="sm">
+        <DialogTitle>Add To-Do Item</DialogTitle>
+        <DialogContent>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Task ID"
+                name="taskId"
+                onChange={handleChange}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Name"
+                name="name"
+                onChange={handleChange}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Description"
+                name="description"
+                onChange={handleChange}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Assignee"
+                name="assignee"
+                onChange={handleChange}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl fullWidth variant="outlined">
+                <InputLabel>Status</InputLabel>
+                <Select
+                  label="Status"
+                  name="status"
+                  onChange={handleChange}
+                  value={taskData.status}
+                >
+                  {statusOptions.map((option) => (
+                    <MenuItem key={option.code} value={option.code}>{option.status}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Start Date"
+                type="date"
+                name="startDate"
+                onChange={handleChange}
+                InputLabelProps={{ shrink: true }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Due Date"
+                type="date"
+                name="dueDate"
+                onChange={handleChange}
+                InputLabelProps={{ shrink: true }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Estimation (hours)"
+                name="estimation"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Spend"
+                name="spend"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Priority"
+                name="priority"
+                onChange={handleChange}
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeAddPopup} color="primary">Cancel</Button>
+          <Button onClick={handleSubmitTask} variant="contained" color="primary">Add</Button>
+        </DialogActions>
+      </Dialog>
 
-{/* Edit Task Dialog */}
-<Dialog open={openEdit} onClose={closeEditPopup} fullWidth maxWidth="sm">
-  <DialogTitle>Edit To-Do Item</DialogTitle>
-  <DialogContent>
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Task ID"
-          name="taskId"
-          value={taskData.taskId}
-          onChange={handleChange}
-          variant="outlined"
-          disabled
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Name"
-          name="name"
-          value={taskData.name}
-          onChange={handleChange}
-          variant="outlined"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Description"
-          name="description"
-          value={taskData.description}
-          onChange={handleChange}
-          variant="outlined"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Assignee"
-          name="assignee"
-          value={taskData.assignee}
-          onChange={handleChange}
-          variant="outlined"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel>Status</InputLabel>
-          <Select
-            label="Status"
-            name="status"
-            value={taskData.status}
-            onChange={handleChange}
-          >
-            {statusOptions.map((option) => (
-              <MenuItem key={option.code} value={option.code}>{option.status}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Start Date"
-          type="date"
-          name="startDate"
-          value={taskData.startDate}
-          onChange={handleChange}
-          InputLabelProps={{ shrink: true }}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Due Date"
-          type="date"
-          name="dueDate"
-          value={taskData.dueDate}
-          onChange={handleChange}
-          InputLabelProps={{ shrink: true }}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Estimation (hours)"
-          name="estimation"
-          value={taskData.estimation}
-          onChange={handleChange}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Spend"
-          name="spend"
-          value={taskData.spend}
-          onChange={handleChange}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          margin="dense"
-          label="Priority"
-          name="priority"
-          value={taskData.priority}
-          onChange={handleChange}
-        />
-      </Grid>
-    </Grid>
-  </DialogContent>
-  <DialogActions>
-    <Button onClick={closeEditPopup} color="primary">Cancel</Button>
-    <Button onClick={handleUpdateTask} variant="contained" color="primary">Update</Button>
-  </DialogActions>
-</Dialog>
-
+      {/* Edit Task Dialog */}
+      <Dialog open={openEdit} onClose={closeEditPopup} TransitionComponent={Transition} fullWidth maxWidth="sm">
+        <DialogTitle>Edit To-Do Item</DialogTitle>
+        <DialogContent>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Task ID"
+                name="taskId"
+                value={taskData.taskId}
+                onChange={handleChange}
+                variant="outlined"
+                disabled
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Name"
+                name="name"
+                value={taskData.name}
+                onChange={handleChange}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Description"
+                name="description"
+                value={taskData.description}
+                onChange={handleChange}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Assignee"
+                name="assignee"
+                value={taskData.assignee}
+                onChange={handleChange}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl fullWidth variant="outlined">
+                <InputLabel>Status</InputLabel>
+                <Select
+                  label="Status"
+                  name="status"
+                  value={taskData.status}
+                  onChange={handleChange}
+                >
+                  {statusOptions.map((option) => (
+                    <MenuItem key={option.code} value={option.code}>{option.status}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Start Date"
+                type="date"
+                name="startDate"
+                value={taskData.startDate}
+                onChange={handleChange}
+                InputLabelProps={{ shrink: true }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Due Date"
+                type="date"
+                name="dueDate"
+                value={taskData.dueDate}
+                onChange={handleChange}
+                InputLabelProps={{ shrink: true }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Estimation (hours)"
+                name="estimation"
+                value={taskData.estimation}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Spend"
+                name="spend"
+                value={taskData.spend}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                margin="dense"
+                label="Priority"
+                name="priority"
+                value={taskData.priority}
+                onChange={handleChange}
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeEditPopup} color="primary">Cancel</Button>
+          <Button onClick={handleUpdateTask} variant="contained" color="primary">Update</Button>
+        </DialogActions>
+      </Dialog>
 
       <TableContainer component={Paper}>
         <Table>
@@ -414,10 +449,10 @@ const TaskTable = () => {
             {paginatedTasks.map((task, index) => (
               <TableRow key={task.id}>
                 <TableCell style={columnStyles.id}>{index + 1 + page * rowsPerPage}</TableCell>
-                <TableCell style={columnStyles.taskId}>{task.taskId}</TableCell>
-                <TableCell style={columnStyles.name}>{task.name}</TableCell>
-                <TableCell style={columnStyles.description}>{task.description}</TableCell>
-                <TableCell style={columnStyles.assignee}>{task.assignee}</TableCell>
+                <TableCell style={columnStyles.taskId}>{highlightText(task.taskId)}</TableCell>
+                <TableCell style={columnStyles.name}>{highlightText(task.name)}</TableCell>
+                <TableCell style={columnStyles.description}>{highlightText(task.description)}</TableCell>
+                <TableCell style={columnStyles.assignee}>{highlightText(task.assignee)}</TableCell>
                 <TableCell style={columnStyles.status}>
                   <Chip label={task.status} variant="outlined" />
                 </TableCell>
@@ -439,7 +474,7 @@ const TaskTable = () => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={tasks.length}
+          count={filteredTasks.length} // Update count to filtered tasks
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
