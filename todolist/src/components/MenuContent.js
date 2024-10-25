@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 
 const mainListItems = [
-  { id: 0, text: "Dashboard", icon: <SpaceDashboardIcon />, path: "/" },
+  { id: 0, text: "Dash", icon: <SpaceDashboardIcon />, path: "/" },
   { id: 1, text: "Task", icon: <AssignmentRoundedIcon />, path: "/task" },
   { id: 2, text: "Board", icon: <AssessmentRoundedIcon />, path: "/status" },
   {

@@ -25,12 +25,17 @@ import {
   Chip,
   Grid,
   Slide,
+  IconButton,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import axios from "axios";
 import { TASK_SAVE, TASK_GET } from "../api-services/API-URL";
 import statusOptions from "../data/status.json";
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CopyAllTwoToneIcon from '@mui/icons-material/CopyAllTwoTone';
 
 const columnStyles = {
   id: { width: 60 },
@@ -165,6 +170,34 @@ const TaskTable = () => {
       <span key={index} style={{ backgroundColor: '#c480ff' }}>{part}</span> : part
     );
   };
+
+  // const copyToClipboard = (text) => {
+  //   navigator.clipboard.writeText(text)
+  //     .then(() => {
+  //       alert('Copied to clipboard: ' + text);
+  //     })
+  //     .catch(err => {
+  //       console.error('Failed to copy: ', err);
+  //     });
+  // };
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [copiedText, setCopiedText] = useState('');
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        setCopiedText(text);
+        setOpenSnackbar(true);
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  }
 
   return (
     <div>
@@ -433,7 +466,9 @@ const TaskTable = () => {
             <TableRow>
               <StyledTableHeadCell style={columnStyles.id}>S.No</StyledTableHeadCell>
               <StyledTableHeadCell style={columnStyles.taskId}>Task ID</StyledTableHeadCell>
-              <StyledTableHeadCell style={columnStyles.name}>Name</StyledTableHeadCell>
+              <StyledTableHeadCell style={columnStyles.name}>Name
+           
+              </StyledTableHeadCell>
               <StyledTableHeadCell style={columnStyles.description}>Description</StyledTableHeadCell>
               <StyledTableHeadCell style={columnStyles.assignee}>Assign</StyledTableHeadCell>
               <StyledTableHeadCell style={columnStyles.status}>Status</StyledTableHeadCell>
@@ -450,7 +485,17 @@ const TaskTable = () => {
               <TableRow key={task.id}>
                 <TableCell style={columnStyles.id}>{index + 1 + page * rowsPerPage}</TableCell>
                 <TableCell style={columnStyles.taskId}>{highlightText(task.taskId)}</TableCell>
-                <TableCell style={columnStyles.name}>{highlightText(task.name)}</TableCell>
+
+  
+                <TableCell style={columnStyles.name}>{highlightText(task.name)}
+                <IconButton onClick={() => copyToClipboard(task.name)}  style={{
+                      color: copiedText === task.name ? '#D6393A' : 'inherit', // Change the copied color here
+                      transition: 'color 0.3s ease',
+                    }}>
+                      {copiedText === task.name ?  <CopyAllTwoToneIcon /> : <ContentCopyIcon />}
+                </IconButton>
+                </TableCell>
+
                 <TableCell style={columnStyles.description}>{highlightText(task.description)}</TableCell>
                 <TableCell style={columnStyles.assignee}>{highlightText(task.assignee)}</TableCell>
                 <TableCell style={columnStyles.status}>
@@ -471,6 +516,11 @@ const TaskTable = () => {
             ))}
           </TableBody>
         </Table>
+        <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={handleCloseSnackbar}  anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+        <Alert onClose={handleCloseSnackbar} severity="success">
+          Copied to clipboard: {copiedText}
+        </Alert>
+      </Snackbar>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
